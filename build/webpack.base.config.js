@@ -69,7 +69,7 @@ var common = {
                     '.less': {
                       'syntax': 'postcss-less',
                       'plugins': [
-                        postcss-nested'
+                        'postcss-nested'
                       ]
                     }
                 }
@@ -84,6 +84,28 @@ var common = {
           
 
         }]
+      },
+      {
+        test: /\.less$/,
+        use: [
+          {
+            loader: isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+            options: isProduction ? {
+              publicPath: '../'
+            } : {}
+          }, 
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: {
+                localIdentName: '[path][name]__[local]--[hash:base64:5]',
+              },
+            }
+          }, {
+            loader: 'less-loader',
+          }
+        ]
       }
     ]
   },
