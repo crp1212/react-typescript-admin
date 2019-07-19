@@ -107,7 +107,28 @@ var common = {
             loader: 'less-loader',
           }
         ]
-      }
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 8192,
+            name: 'img/[name].[ext]'
+          }
+        }]
+      },
+      { // 针对antd不启用css-module的规则
+        test: /\.css?$/,
+        use: [
+            isProduction ? MiniCssExtractPlugin.loader : 'style-loader', {
+                loader: 'css-loader',
+                options: {
+                  
+                }
+            }
+        ]
+    }
     ]
   },
   plugins: [
