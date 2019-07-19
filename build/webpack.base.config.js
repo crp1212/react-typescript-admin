@@ -58,6 +58,7 @@ var common = {
             cacheDirectory: false,
             plugins: [
               'react-hot-loader/babel',
+              '@babel/plugin-transform-runtime',
               'transform-class-properties',
               ['react-css-modules', {
                 context,
@@ -127,6 +128,8 @@ if (isProduction) {
     filename: 'css/[name].[hash].css',
     chunkFilename: 'css/[id].css'
   }))
+} else { // 开发时配置
+  common.resolve.alias['react-dom'] = '@hot-loader/react-dom' 
 }
 plugins.forEach((x) => {
   common.plugins.push(x)
