@@ -6,7 +6,7 @@ import {
   REQUEST_LOGOUT_SUCCESS
 } from './constant'
 var initialState = {
-  isLogin: true
+  isLogin: false
 }
 
 export const root = combineReducer(initialState, {
