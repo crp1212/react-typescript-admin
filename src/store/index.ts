@@ -1,11 +1,12 @@
 import {
   createStore,
   applyMiddleware,
-  compose
+  compose,
+  combineReducers
 } from 'redux'
-import { createReducer } from './reducer'
+import Login from './login/reducer'
 import createSagaMiddleware from 'redux-saga'
-import rootSaga from './saga'
+import rootSaga from './login/saga'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -18,12 +19,18 @@ if (process.env.NODE_ENV !== 'production' ) { // 开发环境添加redux-devtool
   devtool && args.push(devtool)
 }
 
+let rootReducer = combineReducers({
+  Login
+})
+let enhancer: any = compose.apply({}, args)
 const store = createStore(
-  createReducer(),
-  compose.apply({}, args)
+  rootReducer,
+  {},
+  enhancer
 )
-store.runSaga = (saga: any) => {
+/* store.runSaga = (saga: any) => {
   sagaMiddleware.run(saga)
-}
+} */
 sagaMiddleware.run(rootSaga)
+
 export default store

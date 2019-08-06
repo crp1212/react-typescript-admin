@@ -2,23 +2,37 @@ import React, { Component } from 'react'
 import LoginBg from '@/assets/image/33-hd.jpg'
 import styles from './Login.less'
 import { Input, Button } from 'antd'
+import { connect } from 'react-redux'
+import { LoginAction } from '@/store/login/action' 
 
 interface LoginProps { 
-  
+  LoginAction: (option: any) => {}
 }
 
 class Login extends Component<LoginProps, {}> {
   public state = {
     username: '',
-    password: ''
+    password: '',
+    Landing: false
   }
   changeValue (value: string, key: string) {
     this.setState({
       [key]: value
     })
   }
-  Login () {
-    console.log(this.state)
+  async requestLoginFn () {
+    if (this.state.Landing) { return }
+    try {
+      this.setState({ Landing: true })
+      let data = await this.props.LoginAction({
+        username: this.state.username,
+        password: this.state.password
+      })
+      console.log(data)
+    } catch (error) {
+      console.error(error)
+    }
+    this.setState({ Landing: false })
   }
   public render () { 
     let username = this.state.username
@@ -47,14 +61,18 @@ class Login extends Component<LoginProps, {}> {
             className={styles.btn} 
             size="large" 
             type="primary"
-            onClick={this.Login.bind(this)}
+            loading={this.state.Landing}
+            onClick={this.requestLoginFn.bind(this)}
           >登录</Button>
         </div>
       </div>
   }
 }
+const mapStateToProps = null
+const mapDispatchToProps = {
+  LoginAction
+}
 
-
-export default Login
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
 
 

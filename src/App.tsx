@@ -10,7 +10,8 @@ interface AppProps {
 }
 class App extends Component<AppProps, {}> {
   public state = {
-    a: '2'
+    a: '2',
+    pageLoading: true 
   }
   componentDidMount () {
     console.log(this.props.isLogin)
@@ -25,7 +26,7 @@ class App extends Component<AppProps, {}> {
 }
 
 const mapStateToProps = (state: any) => {
-  let isLogin = state.root.isLogin
+  let isLogin = state.Login.isLogin
   return {
     isLogin
   }

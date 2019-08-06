@@ -6,7 +6,7 @@ function absolutePath (str) {
 var dev = {
     port: 3318,
     proxy: { /* 详细了解 https://webpack.js.org/configuration/dev-server/ */
-        '/warehouse': {
+        '/': {
             target: 'http://localhost:3000',
             secure: false
         }

@@ -4,24 +4,24 @@ import {
   REQUEST_LOGOUT
 } from './constant'
 import {
-  requestLoginSuccess,
-  requestLogoutSuccess
+  LoginSuccessAction,
+  LogoutSuccessAction
 } from './action'
-function login () {}
-function logout() {}
+import { requestLogin, requestLogout } from '@/apis/login'
 export function helloSaga () {
     
 }
 function* loginFlow () {
   while (true) {
     let action = yield take(REQUEST_LOGIN)
-    yield call(login, { ...action })
-    yield put(requestLoginSuccess({
+    console.log(action)
+    yield call(requestLogin, { ...action })
+    yield put(LoginSuccessAction({
         userName: action.userName
     }))
     action = yield take(REQUEST_LOGOUT)
-    yield call(logout, { ...action })
-    yield put(requestLogoutSuccess())
+    yield call(requestLogout, { ...action })
+    yield put(LogoutSuccessAction())
   }
 }
 export default function* rootSaga () {
