@@ -13,6 +13,7 @@ function formatParams (method: string, params: any, config?: any) { // 获取正
     }
   } else {
     result = qs.stringify(params)
+    console.log('result', result)
   }
   return result
 }
@@ -53,7 +54,7 @@ export const fetch = (method: string, url: string, closeGlobalErrorTips = false)
   return (params = {}, config = {}) => new Promise((resolve, reject) => {
     let parameter = formatParams(method, params, config)
     let requesrFn: (url: string, params: any, config?: any) => any  = getAxiosFn(method)
-    requesrFn(url, params, config).then((response: any) => {
+    requesrFn(url, parameter, config).then((response: any) => {
       let status: number = response.status
       requestSuccessHandle(response, resolve, reject)
     }).catch((error: any) => {
