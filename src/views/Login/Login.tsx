@@ -3,10 +3,10 @@ import LoginBg from '@/assets/image/33-hd.jpg'
 import styles from './Login.less'
 import { Input, Button } from 'antd'
 import { connect } from 'react-redux'
-import { LoginAction } from '@/store/login/action' 
-
+import { loginFlow } from '@/store/login/flow'
+ 
 interface LoginProps { 
-  LoginAction: (option: any) => {}
+  LoginFlowFn: (option: any) => {}
 }
 
 class Login extends Component<LoginProps, {}> {
@@ -24,7 +24,7 @@ class Login extends Component<LoginProps, {}> {
     if (this.state.Landing) { return }
     try {
       this.setState({ Landing: true })
-      let data = await this.props.LoginAction({
+      let data = await this.props.LoginFlowFn({
         username: this.state.username,
         password: this.state.password
       })
@@ -69,9 +69,9 @@ class Login extends Component<LoginProps, {}> {
   }
 }
 const mapStateToProps = null
-const mapDispatchToProps = {
-  LoginAction
-}
+const mapDispatchToProps = (dispatch: any) => ({
+  LoginFlowFn: loginFlow(dispatch)
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)
 

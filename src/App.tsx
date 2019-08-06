@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { hot } from 'react-hot-loader'
 import { connect } from 'react-redux'
-import { Route, Link } from 'react-router-dom'
 import Login from '@/views/Login/Login'
 
 interface AppProps { 
@@ -19,7 +18,7 @@ class App extends Component<AppProps, {}> {
   public render () {    
     return <div className="app-container">
       {
-        this.props.isLogin ? '' : <Login /> 
+        this.props.isLogin ? <div>465465</div> : <Login /> 
       }
     </div>
   }
