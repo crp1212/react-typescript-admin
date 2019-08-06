@@ -27,6 +27,6 @@ function* loginFlow () {
 export default function* rootSaga () {
   yield all([
     helloSaga(),
-    loginFlow()
+    // loginFlow()
   ])
 }
