@@ -1,6 +1,6 @@
-export default function (name: string, requestFn: (parameter: any) => {}) {
+export default function (name: string, requestFn: (parameter?: any) => {}) {
   return function (dispatch: any) { // 任意参数
-    return async function (parameter: any) {
+    return async function (parameter?: any) {
       let success = null
       let init = dispatch({
         type: `REQUEST_${name}`

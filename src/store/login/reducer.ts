@@ -26,6 +26,9 @@ const Login = createReducer(initialState, {
       ...state
     }
   },
+  [REQUEST_LOGIN]: (state: any, action: any) => {
+    return state
+  },
   [REQUEST_LOGOUT_SUCCESS]: (state: any) => ({
     ...state,
     isLogin: false
