@@ -15,12 +15,12 @@ class Login extends Component<LoginProps, {}> {
     password: '',
     Landing: false
   }
-  changeValue (value: string, key: string) {
+  private changeValue (value: string, key: string) {
     this.setState({
       [key]: value
     })
   }
-  async requestLoginFn () {
+  private async requestLoginFn () {
     if (this.state.Landing) { return }
     try {
       this.setState({ Landing: true })
