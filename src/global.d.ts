@@ -1,5 +1,17 @@
 declare global {  
   interface Window {
-    isWeixin: boolean
+    isWeixin: boolean;
+  }
+  interface RoutePramas {
+    path: string;
+    exact: boolean;
+    component: React.ComponentType<any>;
+    meta?: {
+      title: string; // 文本
+      icon?: string; // 图标
+    };
+    children?: RoutePramas[];
+    hide?: boolean; // 参考信息, 是否显示在menu
   }
 }
+export default global
