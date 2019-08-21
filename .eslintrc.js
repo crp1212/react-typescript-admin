@@ -31,6 +31,7 @@ module.exports = {
             "error",
             "never"
         ],
-        "@typescript-eslint/no-unused-vars": 0
+        "@typescript-eslint/no-unused-vars": 0,
+        "@typescript-eslint/no-explicit-any": 0
     }
 }

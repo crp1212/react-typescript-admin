@@ -13,5 +13,11 @@ declare global {
     children?: RoutePramas[];
     hide?: boolean; // 参考信息, 是否显示在menu
   }
+  interface CommonObject {
+    [propName: string]: any;
+  }
+  interface StringObject {
+    [propName: string]: string;
+  }
 }
 export default global
