@@ -4,8 +4,7 @@ import LoadingCover from '@/components/LoadingCover'
 import Icon from '@/components/Icon/Icon'
 import { Menu } from 'antd'
 import { ClickParam } from 'antd/lib/menu'
-import { Link } from 'react-router-dom'
-
+import HistoryOperate from '@/utils/history-operate'
 
 interface SideBarProps { 
   routes: RoutePramas[];
@@ -16,10 +15,13 @@ class SideBar extends Component<SideBarProps, {}> {
     loading: false
   }
   public handleClick (val: ClickParam) {
-    let key = val.key
+    let path = val.key
+    HistoryOperate.push({
+      path
+    })
   }
   public componentDidMount () {
-    
+
   }
   public getMenuContent (routes: RoutePramas[]) { // 获取子菜单内容
     return routes.map((route) => {
@@ -45,7 +47,8 @@ class SideBar extends Component<SideBarProps, {}> {
   }
   public getMenuItemConent (route: RoutePramas) {
     return <Menu.Item key={route.path} >
-      <Link to={route.path}>{route.meta ? route.meta.title : ''}</Link>
+      {route.meta ? route.meta.title : ''}
+      {/*  <Link to={route.path}></Link> */}
     </Menu.Item>
   }
   public menuItemClick (route: RoutePramas) {
