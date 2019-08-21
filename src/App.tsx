@@ -3,6 +3,7 @@ import { hot } from 'react-hot-loader'
 import { connect } from 'react-redux'
 import Login from '@/views/Login/Login'
 import Layout from '@/views/Layout/Index'
+import HistoryOperate, { HistoryChangeParams } from '@/utils/history-operate'
 
 interface AppProps { 
   isLogin: boolean;
@@ -12,9 +13,17 @@ class App extends Component<AppProps, {}> {
     a: '2',
     pageLoading: true 
   }
+  private unWatch () {}
   public componentDidMount () {
-    console.log(this.props.isLogin)
+    this.unWatch = HistoryOperate.watch(this.routerChange)
   }
+  public componentWillUnmount () {
+    this.unWatch()
+  }
+  public routerChange (routeParams: HistoryChangeParams) { // 路由变化通知
+    // console.log(routeParams)
+  }
+
   public render () {    
     return <div className="app-container">
       {
