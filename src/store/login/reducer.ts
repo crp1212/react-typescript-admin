@@ -7,7 +7,7 @@ import {
   REQUEST_LOGOUT_FAIL
 } from './constant'
 var initialState = {
-  isLogin: false,
+  isLogin: true,
   isRequestLogin: false
 }
 const Login = createReducer(initialState, {

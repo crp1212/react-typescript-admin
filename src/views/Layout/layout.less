@@ -10,6 +10,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-shrink: 0;
   .logo{
     background-image: url('../../assets/image/node.svg');
     background-size: 59px 36px;
@@ -40,4 +41,34 @@
       margin-right: 8px;
     }
   }
+}
+.section{
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+}
+.aside{
+  width: 208px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex-shrink: 0;
+  .menu {
+    flex-grow: 1;
+    overflow-y: auto;
+    height: 0;
+  }
+  .subMenu{
+    i{
+      margin-right: 10px;
+    }
+    .iconfont{
+      font-size: 14px;
+    }
+  }
+}
+.main{
+  position: relative;
+  flex-grow: 1;
+  padding: 16px;
 }
