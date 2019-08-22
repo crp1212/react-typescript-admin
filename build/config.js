@@ -4,13 +4,15 @@ function absolutePath (str) {
     return path.resolve(process.cwd(), str)
 }
 var dev = {
-    port: 3318,
-    proxy: { /* 详细了解 https://webpack.js.org/configuration/dev-server/ */
-        '/api': {
-            target: 'http://localhost:3000',
-            secure: false
+    port: 3030,
+    proxy: [
+        {
+            context: ['/backstage', '/qiuniu_token', '/login', '/logout'],
+            target: 'http://support.xair.cn/',
+            secure: false,
+            changeOrigin: true
         }
-    },
+    ],
     static: absolutePath('static'), //静态文件夹目录
 }
 var product = {
