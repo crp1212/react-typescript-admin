@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom'
 import { Alert } from 'antd'
 import styles from './layout.less'
 interface MainProps { 
-  
+  a?: string;
 }
 
 class Main extends Component<MainProps, {}> {

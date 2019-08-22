@@ -17,6 +17,12 @@ class Icon extends Component<IconProps, {}> {
   public onClick () {
     this.props.onClick && this.props.onClick()
   }
+  public onMouseEnter () {
+    this.props.onMouseEnter && this.props.onMouseEnter()
+  }
+  public onMouseLeave () {
+    this.props.onMouseLeave && this.props.onMouseLeave()
+  }
   public getIconClassName () {
     return `${this.props.className} ${styles.icon} iconfont icon-${this.props.value}`
   }
@@ -31,8 +37,8 @@ class Icon extends Component<IconProps, {}> {
       className={ this.getIconClassName() } 
       style={ this.getCustomStyle() } 
       onClick={ this.onClick.bind(this) }
-      onMouseEnter={this.props.onMouseEnter}
-      onMouseLeave={this.props.onMouseLeave}
+      onMouseEnter={this.onMouseEnter}
+      onMouseLeave={this.onMouseLeave}
       { ...this.props.attrs }
     ></i>
   }
