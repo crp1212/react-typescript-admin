@@ -1,1 +1,4 @@
-添加layout sidebar模块
+/* 
+  1.布局分为layout和非layout(不需要菜单栏的)两个模式
+  2.
+*/

@@ -12,6 +12,7 @@ declare global {
       newWindow?: boolean; // 是否通过新窗口打开
     };
     children?: RoutePramas[];
+    parent: RoutePramas;
     hide?: boolean; // 参考信息, 是否显示在menu
   }
   interface CommonObject {

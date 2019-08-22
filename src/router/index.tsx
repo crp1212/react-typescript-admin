@@ -30,8 +30,7 @@ let routesConfig = [
         path: '/a',
         exact: true,
         meta: {
-          title: 'a',
-          newWindow: true
+          title: 'a'
         },
         component: () => <div>a</div>
       },
@@ -60,12 +59,12 @@ let routesPathMapRouter: CommonObject = { // 保存router的path和router配置�
 
 function initRoutes (routes: RoutePramas[]) { // 对手写routeConfig做处理
   routes.forEach((item) => {
-    console.log(item.path)
     routesPathMapRouter[item.path] = item
     let children = item.children
     if (!children) return
     children.forEach(child => {
       child.path = item.path + child.path
+      child.parent = item
     })
     initRoutes(children)
   })
@@ -99,4 +98,8 @@ export const sideBarsRoutes = routes.filter((item) => !item.hide)
 export const getRouterMetaByPathname = (pathname: string) => {
   let meta: CommonObject = routesPathMapRouter[pathname].meta || {}
   return meta
+}
+export const getRouterParent = (pathname: string) => {
+  let parent = routesPathMapRouter[pathname].parent || {}
+  return parent
 }

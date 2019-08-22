@@ -4,21 +4,54 @@ import LoadingCover from '@/components/LoadingCover'
 import Icon from '@/components/Icon/Icon'
 import { Menu } from 'antd'
 import { ClickParam } from 'antd/lib/menu'
+import HistoryOperate, { HistoryChangeParams } from '@/utils/history-operate'
+import { sideBarsRoutes, getRouterMetaByPathname, getRouterParent } from '@/router/index'
+import { openNewRouterPathByNewWindow } from '@/utils/open-window'
 
-interface SideBarProps { 
-  routes: RoutePramas[];
-  menuItemClick: Function;
-}
+/* interface SideBarProps { 
+  
+} */
 
-class SideBar extends Component<SideBarProps, {}> {
+class SideBar extends Component {
   public state = {
-    loading: false
+    loading: false,
+    selectedKeys: [''],
+    openKeys: ['']
+  }
+  public currentPath = ''
+  public unWatch () {}
+  public componentDidMount () {
+    this.unWatch = HistoryOperate.watch(this.routerChange.bind(this), true)
+  }
+  public routerChange (routeParams: HistoryChangeParams) {
+    let { pathname } = routeParams
+    let parent = getRouterParent(pathname)
+    this.setState({
+      selectedKeys: [pathname],
+      openKeys: [parent.path]
+    })
+  }
+  public componentWillUnmount () {
+    this.unWatch()
+  }
+  public onOpenChange (openKeys: string[]) {
+    this.setState({
+      openKeys
+    })
+  
   }
   public handleClick (val: ClickParam) {
-    this.props.menuItemClick(val)
-  }
-  public componentDidMount () {
-
+    let pathname = val.key
+    if (pathname === this.currentPath) { return }
+    let meta = getRouterMetaByPathname(pathname)
+    if (meta.newWindow) {
+      openNewRouterPathByNewWindow(pathname)
+    } else {
+      HistoryOperate.push({
+        pathname
+      })
+      this.currentPath = pathname
+    }
   }
   public getMenuContent (routes: RoutePramas[]) { // 获取子菜单内容
     return routes.map((route) => {
@@ -48,9 +81,6 @@ class SideBar extends Component<SideBarProps, {}> {
       {/*  <Link to={route.path}></Link> */}
     </Menu.Item>
   }
-  public menuItemClick (route: RoutePramas) {
-    console.log(route)
-  }
   public render () {
     return <aside className={styles.aside}>
       <LoadingCover loading={ this.state.loading }></LoadingCover>
@@ -60,8 +90,11 @@ class SideBar extends Component<SideBarProps, {}> {
         style={{ width: '100%' }}
         mode="inline"
         className={styles.menu}
+        selectedKeys={this.state.selectedKeys}
+        openKeys={this.state.openKeys}
+        onOpenChange={this.onOpenChange.bind(this)}
       >
-        {this.getMenuContent(this.props.routes)}
+        {this.getMenuContent(sideBarsRoutes)}
       </Menu>  
     </aside>
   }
