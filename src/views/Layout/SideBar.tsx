@@ -4,10 +4,10 @@ import LoadingCover from '@/components/LoadingCover'
 import Icon from '@/components/Icon/Icon'
 import { Menu } from 'antd'
 import { ClickParam } from 'antd/lib/menu'
-import HistoryOperate from '@/utils/history-operate'
 
 interface SideBarProps { 
   routes: RoutePramas[];
+  menuItemClick: Function;
 }
 
 class SideBar extends Component<SideBarProps, {}> {
@@ -15,10 +15,7 @@ class SideBar extends Component<SideBarProps, {}> {
     loading: false
   }
   public handleClick (val: ClickParam) {
-    let pathname = val.key
-    HistoryOperate.push({
-      pathname
-    })
+    this.props.menuItemClick(val)
   }
   public componentDidMount () {
 
@@ -46,7 +43,7 @@ class SideBar extends Component<SideBarProps, {}> {
     </Menu.SubMenu>
   }
   public getMenuItemConent (route: RoutePramas) {
-    return <Menu.Item key={route.path} >
+    return <Menu.Item key={route.path}>
       {route.meta ? route.meta.title : ''}
       {/*  <Link to={route.path}></Link> */}
     </Menu.Item>
@@ -59,7 +56,7 @@ class SideBar extends Component<SideBarProps, {}> {
       <LoadingCover loading={ this.state.loading }></LoadingCover>
       <div className={styles.asideContent}></div>
       <Menu
-        onClick={this.handleClick}
+        onClick={this.handleClick.bind(this)}
         style={{ width: '100%' }}
         mode="inline"
         className={styles.menu}
