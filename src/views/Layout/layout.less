@@ -48,22 +48,36 @@
   flex-direction: row;
 }
 .aside{
-  width: 208px;
   display: flex;
   flex-direction: column;
   position: relative;
   flex-shrink: 0;
+  transition: all .4s;
   .menu {
     flex-grow: 1;
     overflow-y: auto;
     height: 0;
   }
   .subMenu{
-    i{
-      margin-right: 10px;
-    }
     .iconfont{
       font-size: 14px;
+    }
+  }
+  .footer{
+    background-color: #333333;
+    height: 42px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    .collapseBtn{
+      transform: rotateZ(0deg);
+      transition: all .4s;
+    }
+    .collapseBtn[data-mode='right']{
+      transform: rotateZ(-180deg);
     }
   }
 }

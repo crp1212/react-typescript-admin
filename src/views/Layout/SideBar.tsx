@@ -16,7 +16,9 @@ class SideBar extends Component {
   public state = {
     loading: false,
     selectedKeys: [''],
-    openKeys: ['']
+    openKeys: [''],
+    collapsed: false,
+    asideWidth: '208px'
   }
   public currentPath = ''
   public unWatch () {}
@@ -26,6 +28,7 @@ class SideBar extends Component {
   public routerChange (routeParams: HistoryChangeParams) {
     let { pathname } = routeParams
     let parent = getRouterParent(pathname)
+    this.currentPath = pathname
     this.setState({
       selectedKeys: [pathname],
       openKeys: [parent.path]
@@ -38,7 +41,14 @@ class SideBar extends Component {
     this.setState({
       openKeys
     })
-  
+  }
+  public menuWidthChange () {
+    let collapsed = !this.state.collapsed
+    this.setState({
+      collapsed,
+      openKeys: collapsed ? [] : [getRouterParent(this.currentPath).path], // 不自动展开是为了让动画不会突兀
+      asideWidth: collapsed ? '80px' : '208px'
+    })
   }
   public handleClick (val: ClickParam) {
     let pathname = val.key
@@ -64,10 +74,11 @@ class SideBar extends Component {
     })
   }
   public getSubMenuContent (route: RoutePramas) {
+    let collapsed = this.state.collapsed
     return <Menu.SubMenu key={route.path} title={
       <span className={styles.subMenu}>
-        <Icon value="mzicon-setting" />
-        { route.meta && route.meta.title }
+        <Icon value="mzicon-setting"/>
+        { collapsed ? '' : <span className="ml10">{ route.meta && route.meta.title }</span> }
       </span>
     }>
       {
@@ -82,9 +93,11 @@ class SideBar extends Component {
     </Menu.Item>
   }
   public render () {
-    return <aside className={styles.aside}>
+    let IconAttrs = {
+      'data-mode': this.state.collapsed ? 'right' : ''
+    }
+    return <aside className={styles.aside} style={{width: this.state.asideWidth}}>
       <LoadingCover loading={ this.state.loading }></LoadingCover>
-      <div className={styles.asideContent}></div>
       <Menu
         onClick={this.handleClick.bind(this)}
         style={{ width: '100%' }}
@@ -93,9 +106,13 @@ class SideBar extends Component {
         selectedKeys={this.state.selectedKeys}
         openKeys={this.state.openKeys}
         onOpenChange={this.onOpenChange.bind(this)}
+        inlineCollapsed={this.state.collapsed}
       >
         {this.getMenuContent(sideBarsRoutes)}
       </Menu>  
+      <div className={styles.footer}>
+        <Icon value="xiangzuo" size={20} className={styles.collapseBtn} attrs={IconAttrs} onClick={ this.menuWidthChange.bind(this) }/>
+      </div>
     </aside>
   }
 }
