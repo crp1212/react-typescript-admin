@@ -3,6 +3,7 @@ import styles from './layout.less'
 import { Popover } from 'antd'
 import { logoutFlow } from '@/store/login/flow'
 import { connect } from 'react-redux'
+import { push as routerPush } from '@/utils/history-operate'
 
 interface HeaderProps { 
   LogoutFlowFn: () => {};
@@ -14,7 +15,10 @@ class Header extends Component<HeaderProps, {}> {
   public async logout () {
     try {
       let data = await this.props.LogoutFlowFn()
-      console.log(data)
+      // 注销成功后, 跳转到登录页
+      routerPush({
+        pathname: '/login'
+      })
     } catch (error) { 
       console.log(error)
     }

@@ -2,7 +2,7 @@ import { createHashHistory } from 'history'
 import { formatQueryParams, getQueryStringArgs } from '@/utils/index'
 /* history操作 */
 export interface HistoryOption {
-  path: string;
+  pathname: string;
   query?: StringObject;
   state?: CommonObject;
 }
@@ -35,19 +35,26 @@ history.listen((location, action) => {
 
 export function push (option: HistoryOption) {
   history.push({
-    pathname: option.path,
+    pathname: option.pathname,
     search: option.query ? formatQueryParams(option.query) : '',
     state: option.state || null
   })
 }
-export function watch (fn: Function) {
+export function getPathname () {
+  return history.location.pathname
+}
+export function watch (fn: Function, firstEmit: boolean) { // firstEmit 表示首次加载要不要触发watch
   let value = ++id + ''
   watchQueue[value] = fn
+  if (firstEmit) {
+    fn(history.location)
+  }
   return function () {
     delete watchQueue[value] 
   }
 }
 export default {
   push,
-  watch
+  watch,
+  getPathname
 }

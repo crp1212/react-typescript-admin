@@ -4,6 +4,7 @@ import styles from './Login.less'
 import { Input, Button } from 'antd'
 import { connect } from 'react-redux'
 import { loginFlow } from '@/store/login/flow'
+import { push as routerPush } from '@/utils/history-operate'
  
 interface LoginProps { 
   LoginFlowFn: (option: any) => {};
@@ -28,12 +29,18 @@ class Login extends Component<LoginProps, {}> {
         username: this.state.username,
         password: this.state.password
       })
-      console.log(data)
+      this.loginSuceessHandel()
     } catch (error) {
       this.setState({ Landing: false })
       console.error(error)
     }
     // this.setState({ Landing: false })
+  }
+  public loginSuceessHandel () {
+    let pathname = '/index'
+    routerPush({
+      pathname
+    })
   }
   public render () { 
     let username = this.state.username

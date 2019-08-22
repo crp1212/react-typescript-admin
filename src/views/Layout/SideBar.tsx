@@ -15,9 +15,9 @@ class SideBar extends Component<SideBarProps, {}> {
     loading: false
   }
   public handleClick (val: ClickParam) {
-    let path = val.key
+    let pathname = val.key
     HistoryOperate.push({
-      path
+      pathname
     })
   }
   public componentDidMount () {
