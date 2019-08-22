@@ -9,6 +9,7 @@ declare global {
     meta?: {
       title: string; // 文本
       icon?: string; // 图标
+      newWindow?: boolean; // 是否通过新窗口打开
     };
     children?: RoutePramas[];
     hide?: boolean; // 参考信息, 是否显示在menu

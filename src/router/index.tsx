@@ -5,18 +5,7 @@ import LoadingPage from '@/views/Login/Login'
 import Template from '@/views/template/index'
 import { Route, RouteComponentProps } from 'react-router-dom'
 
-function formatRoutes (routes: RoutePramas[]) {
-  routes.forEach((item) => {
-    let children = item.children
-    if (!children) return
-    children.forEach(child => {
-      child.path = item.path + child.path
-    })
-    formatRoutes(children)
-  })
-  return routes
-}
-export let routes = formatRoutes([
+let routesConfig = [
   {
     path: '/index',
     exact: true,
@@ -41,7 +30,8 @@ export let routes = formatRoutes([
         path: '/a',
         exact: true,
         meta: {
-          title: 'a'
+          title: 'a',
+          newWindow: true
         },
         component: () => <div>a</div>
       },
@@ -63,7 +53,26 @@ export let routes = formatRoutes([
       }
     ]
   }
-])
+]
+let routesPathMapRouter: CommonObject = { // 保存router的path和router配置的映射
+
+}
+
+function initRoutes (routes: RoutePramas[]) { // 对手写routeConfig做处理
+  routes.forEach((item) => {
+    console.log(item.path)
+    routesPathMapRouter[item.path] = item
+    let children = item.children
+    if (!children) return
+    children.forEach(child => {
+      child.path = item.path + child.path
+    })
+    initRoutes(children)
+  })
+  return routes
+}
+
+export let routes = initRoutes(routesConfig)
 
 export function generatorRoutesWithSubRoutes (route: RoutePramas) {
   return <Route path={route.path} exact={route.exact} key={route.path} render={ props => {
@@ -75,6 +84,7 @@ export function generatorRoutesWithSubRoutes (route: RoutePramas) {
     </Result>
   } }></Route>
 }
+
 export function routeRender (props: RouteComponentProps, route: RoutePramas) {
   let Result = route.component
   let children: RoutePramas[] = route.children || []
@@ -84,4 +94,9 @@ export function routeRender (props: RouteComponentProps, route: RoutePramas) {
     { childrenRoutes }
   </Result>
 }
+
 export const sideBarsRoutes = routes.filter((item) => !item.hide) 
+export const getRouterMetaByPathname = (pathname: string) => {
+  let meta: CommonObject = routesPathMapRouter[pathname].meta || {}
+  return meta
+}
