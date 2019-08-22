@@ -6,6 +6,8 @@ interface IconProps {
   size?: number;
   className?: string;
   onClick?: Function;
+  onMouseEnter?: Function;
+  onMouseLeave?: Function;
   attrs?: StringObject; // 自定义元素属性
 }
 
@@ -29,6 +31,8 @@ class Icon extends Component<IconProps, {}> {
       className={ this.getIconClassName() } 
       style={ this.getCustomStyle() } 
       onClick={ this.onClick.bind(this) }
+      onMouseEnter={this.props.onMouseEnter}
+      onMouseLeave={this.props.onMouseLeave}
       { ...this.props.attrs }
     ></i>
   }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styles from './layout.less'
 import LoadingCover from '@/components/LoadingCover'
 import Icon from '@/components/Icon/Icon'
-import { Menu } from 'antd'
+import { Menu, Tooltip, Button } from 'antd'
 import { ClickParam } from 'antd/lib/menu'
 import HistoryOperate, { HistoryChangeParams } from '@/utils/history-operate'
 import { sideBarsRoutes, getRouterMetaByPathname, getRouterParent } from '@/router/index'
@@ -11,14 +11,17 @@ import { openNewRouterPathByNewWindow } from '@/utils/open-window'
 /* interface SideBarProps { 
   
 } */
-
+function getToolTips (collapsed: boolean) {
+  return collapsed ? '展开菜单' : '收缩菜单'
+}
 class SideBar extends Component {
   public state = {
     loading: false,
     selectedKeys: [''],
     openKeys: [''],
     collapsed: false,
-    asideWidth: '208px'
+    asideWidth: '208px',
+    toolTips: getToolTips(false)
   }
   public currentPath = ''
   public unWatch () {}
@@ -47,7 +50,8 @@ class SideBar extends Component {
     this.setState({
       collapsed,
       openKeys: collapsed ? [] : [getRouterParent(this.currentPath).path], // 不自动展开是为了让动画不会突兀
-      asideWidth: collapsed ? '80px' : '208px'
+      asideWidth: collapsed ? '80px' : '208px',
+      toolTips: getToolTips(collapsed)
     })
   }
   public handleClick (val: ClickParam) {
@@ -111,7 +115,9 @@ class SideBar extends Component {
         {this.getMenuContent(sideBarsRoutes)}
       </Menu>  
       <div className={styles.footer}>
-        <Icon value="xiangzuo" size={20} className={styles.collapseBtn} attrs={IconAttrs} onClick={ this.menuWidthChange.bind(this) }/>
+        <Tooltip placement="top" title={this.state.toolTips}>
+          <Icon value="xiangzuo" size={20} className={styles.collapseBtn} attrs={IconAttrs} onClick={ this.menuWidthChange.bind(this) }/>
+        </Tooltip>
       </div>
     </aside>
   }
