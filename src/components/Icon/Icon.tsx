@@ -37,8 +37,8 @@ class Icon extends Component<IconProps, {}> {
       className={ this.getIconClassName() } 
       style={ this.getCustomStyle() } 
       onClick={ this.onClick.bind(this) }
-      onMouseEnter={this.onMouseEnter}
-      onMouseLeave={this.onMouseLeave}
+      onMouseEnter={this.onMouseEnter.bind(this)}
+      onMouseLeave={this.onMouseLeave.bind(this)}
       { ...this.props.attrs }
     ></i>
   }
