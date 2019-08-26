@@ -9,7 +9,7 @@ class Template extends Component<TemplateProps, {}> {
 
   }
   public componentDidMount () {
-    console.log(this.props.children)
+
   }
   public render () {    
     return this.props.children

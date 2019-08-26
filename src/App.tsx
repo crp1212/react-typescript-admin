@@ -8,12 +8,14 @@ import LoadingCover from '@/components/LoadingCover'
 import { requestUserInfo } from '@/apis/common'
 import { watchUnLogin } from '@/apis/index'
 import { LogoutSuccessAction } from '@/store/login/action'
+import { InituserInfoFlow } from '@/store/common/flow'
 import { judgeRouteIsCustomLayout, customLayoutRoute } from '@/router/index'
 import routeRender from '@/router/routerRender.tsx'
  
 interface AppProps { 
   isLogin: boolean;
   LogoutSuccessAction: Function;
+  InituserInfoFlowFn: Function;
 }
 class App extends Component<AppProps, {}> {
   public state = {
@@ -64,7 +66,7 @@ class App extends Component<AppProps, {}> {
   }
   public async initUserInfo () {
     try {
-      let data = await requestUserInfo()
+      let data = await this.props.InituserInfoFlowFn()
       console.log(data)
     } catch (error) {
       console.log(error)
@@ -89,10 +91,11 @@ const mapStateToProps = (state: any) => {
     isLogin
   }
 }
-const mapDispatchToProps = {
-  LogoutSuccessAction
-}
 
+const mapDispatchToProps = (dispatch: any) => ({
+  InituserInfoFlowFn: InituserInfoFlow(dispatch),
+  LogoutSuccessAction: () => dispatch(LogoutSuccessAction())
+})
 export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(App))
 
 
