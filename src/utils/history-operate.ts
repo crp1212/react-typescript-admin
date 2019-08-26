@@ -20,15 +20,20 @@ let watchQueue: CommonObject = {} // 监听路由变化的队列
 history.listen((location, action) => {
   let {pathname, search, state} = location
   if (currentPath !== pathname) {
-    Object.keys(watchQueue).forEach((key) => {
-      watchQueue[key]({
-        pathname,
-        query: getQueryStringArgs(search),
-        search,
-        state
+    try {
+      Object.keys(watchQueue).forEach((key) => {
+        let fn = watchQueue[key]
+        fn && fn({
+          pathname,
+          query: getQueryStringArgs(search),
+          search,
+          state
+        })
       })
-    })
-    currentPath = pathname
+      currentPath = pathname
+    } catch (error) {
+      console.log(error)
+    }
   }
   
 })

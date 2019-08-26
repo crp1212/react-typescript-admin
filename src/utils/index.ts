@@ -67,3 +67,14 @@ export const formatQueryParams = function (query: StringObject): string {
   if (!result) { return '' }
   return Object.keys(result).map(key => `${key}=${query[key]}`).join('&')
 }
+export const detachArrayByCondition = function (arr: any[],fn: Function) { // 根据判断条件分离出true和false两个数组的， 索引0是true 1是false
+  let result: [any[], any[]] = [[], []]
+  for (let i = 0; i < arr.length; i++) {
+    if (fn(arr[i])) {
+      result[0].push(arr[i])
+    } else {
+      result[1].push(arr[i])
+    }
+  }
+  return result
+}

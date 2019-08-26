@@ -8,7 +8,9 @@ import LoadingCover from '@/components/LoadingCover'
 import { requestUserInfo } from '@/apis/common'
 import { watchUnLogin } from '@/apis/index'
 import { LogoutSuccessAction } from '@/store/login/action'
-
+import { judgeRouteIsCustomLayout, customLayoutRoute } from '@/router/index'
+import routeRender from '@/router/routerRender.tsx'
+ 
 interface AppProps { 
   isLogin: boolean;
   LogoutSuccessAction: Function;
@@ -16,10 +18,13 @@ interface AppProps {
 class App extends Component<AppProps, {}> {
   public state = {
     a: '2',
-    pageLoading: true 
+    pageLoading: true,
+    useLayout: true,
+    isCustomLayout: true
   }
   private unWatch () {}
   public componentDidMount () {
+    console.log('didMount')
     watchUnLogin(this.unLoginHandle.bind(this))
     this.unWatch = HistoryOperate.watch(this.routerChange.bind(this), true)
     this.initUserInfo()
@@ -28,9 +33,7 @@ class App extends Component<AppProps, {}> {
     this.unWatch()
   }
   public unLoginHandle () {
-    this.setState({
-      pageLoading: false
-    })
+    this.hidePageLoading()
     this.props.LogoutSuccessAction()
     let currentPath = HistoryOperate.getPathname()
     if (currentPath !== '/login') {
@@ -45,6 +48,19 @@ class App extends Component<AppProps, {}> {
     if (pathname === '/login') { // 如果是登录页面
       this.props.LogoutSuccessAction()
     }
+    let isCustomLayout = judgeRouteIsCustomLayout(pathname)
+    if (isCustomLayout !== this.state.isCustomLayout) {
+      this.setState({
+        isCustomLayout
+      })
+    }
+  }
+  public hidePageLoading () {
+    if (this.state.pageLoading) {
+      this.setState({
+        pageLoading: false
+      })
+    }
   }
   public async initUserInfo () {
     try {
@@ -53,14 +69,11 @@ class App extends Component<AppProps, {}> {
     } catch (error) {
       console.log(error)
     }
-    this.setState({
-      pageLoading: false
-    })
+    this.hidePageLoading()
   }
-
   public render () {    
-    let {pageLoading} = this.state
-    let MainContent= pageLoading ? '' : (this.props.isLogin ? <Layout />: <Login /> )
+    let { isCustomLayout, pageLoading } = this.state
+    let MainContent= pageLoading ? '' : (isCustomLayout ? routeRender(customLayoutRoute) : <Layout /> )
     return <div className="app-container">
       <LoadingCover loading={pageLoading}></LoadingCover>  
       {

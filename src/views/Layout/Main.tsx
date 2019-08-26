@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { routes, generatorRoutesWithSubRoutes } from '@/router/index'
+import { commonLayoutRoute as routes, generatorRoutesWithSubRoutes } from '@/router/index'
 import { Switch, Route } from 'react-router-dom'
 import { Alert } from 'antd'
 import styles from './layout.less'

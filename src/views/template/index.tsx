@@ -12,11 +12,7 @@ class Template extends Component<TemplateProps, {}> {
     console.log(this.props.children)
   }
   public render () {    
-    return <div className="tempalte">
-      {
-        this.props.children
-      }
-    </div>
+    return this.props.children
   }
 }
 
