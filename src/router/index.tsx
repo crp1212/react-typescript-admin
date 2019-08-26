@@ -2,6 +2,7 @@ import React from 'react'
 import CommonSuspenseContianer from '@/components/CommonSuspenseContianer'
 import IndexPage from '@/views/Index/Index'
 import LoadingPage from '@/views/Login/Login'
+import Common404 from '@/views/common/404'
 import Template from '@/views/template/index'
 import { Route, Switch, Redirect } from 'react-router-dom'
  
@@ -133,7 +134,7 @@ export function generatorRoutesWithSubRoutes (route: RoutePramas) {
     return <Result>
       <Switch>
         { childrenRoutes }
-        <Route render={props => <div>请查看链接地址</div>}></Route>
+        <Route render={props => <Common404></Common404> }></Route>
       </Switch>
     </Result>
   } }></Route>
