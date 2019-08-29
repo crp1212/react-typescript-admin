@@ -72,7 +72,9 @@ function requestSuccessHandle (res: any, resolve: any, reject: any, options = de
     notifyUnAuth()
   }
   let successDataHandles = options.successDataHandles || ['commonAxiosSuccessDataHandle']
-  let dataHandle = compose.apply(null, successDataHandles.map(name => successDataHandleCollection[name]))
+  let dataHandle = successDataHandles.length > 0
+    ? compose.apply(null, successDataHandles.map(name => successDataHandleCollection[name]))
+    : (val: any) => val // 如果设置是空数组则代表原值返回
   let result = dataHandle(data)
   resolve(result)
 }
@@ -88,7 +90,7 @@ function requestFailHandle (res: any, resolve: any, reject: any, options = defau
 }
 
 export const fetch = (method: string, url: string, options = defaultOptions) => {
-  return (params = {}, config = {}) => new Promise((resolve, reject) => {
+  return (params = {}, config = {}) => new Promise<CommonObject>((resolve, reject) => {
     let parameter = formatParams(method, params, config)
     let requesrFn: (url: string, params: any, config?: any) => any  = getAxiosFn(method)
     requesrFn(url, parameter, config).then((response: any) => {
