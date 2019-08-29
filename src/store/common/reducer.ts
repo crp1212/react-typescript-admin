@@ -1,22 +1,21 @@
 import { createReducer } from '@/utils/reducerTool'
-import { REQUEST_USRINFO, REQUEST_USRINFO_SUCCESS, REQUEST_USRINFO_FAIL, REQUEST_QINIUCONFIG, REQUEST_QINIUCONFIG_SUCCESS, REQUEST_QINIUCONFIG_FAIL } from './constant'
+import { REQUEST_USERINFO, REQUEST_USERINFO_SUCCESS, REQUEST_USERINFO_FAIL, REQUEST_QINIUCONFIG, REQUEST_QINIUCONFIG_SUCCESS, REQUEST_QINIUCONFIG_FAIL } from './constant'
 
 var initialState = {
   userInfo: null,
   QIniuConfig: null
 }
 const Common = createReducer(initialState, {
-  [REQUEST_USRINFO]: (state: any, action: any) => {
+  [REQUEST_USERINFO]: (state: any, action: any) => {
     return state
   },
-  [REQUEST_USRINFO_SUCCESS]: (state: any, action: any) => {
-    console.log(state, action)
+  [REQUEST_USERINFO_SUCCESS]: (state: any, action: any) => {
     return {
       ...state,
-      isLogin: true
+      userInfo: action.value
     }
   },
-  [REQUEST_USRINFO_FAIL]: (state: any, action: any) => {
+  [REQUEST_USERINFO_FAIL]: (state: any, action: any) => {
     console.log(action)
     return {
       ...state

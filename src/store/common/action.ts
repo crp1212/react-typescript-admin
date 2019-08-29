@@ -1,4 +1,4 @@
 import { createAction } from '@/utils/reducerTool'
-import { REQUEST_USRINFO, REQUEST_QINIUCONFIG } from './constant'
-export const InitUserinfo = createAction(REQUEST_USRINFO)
+import { REQUEST_USERINFO, REQUEST_QINIUCONFIG } from './constant'
+export const InitUserinfo = createAction(REQUEST_USERINFO)
 export const InitQiniuConfig = createAction(REQUEST_QINIUCONFIG)

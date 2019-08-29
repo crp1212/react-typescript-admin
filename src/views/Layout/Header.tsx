@@ -7,6 +7,7 @@ import { push as routerPush } from '@/utils/history-operate'
 
 interface HeaderProps { 
   LogoutFlowFn: () => {};
+  userInfo: CommonObject;
 }
 
 class Header extends Component<HeaderProps, {}> {
@@ -34,7 +35,7 @@ class Header extends Component<HeaderProps, {}> {
       >
         <div className={styles.info}>
           <div className={styles.avatar}></div>
-          <div className={styles.userName}>成吉思汗</div>
+          <div className={styles.userName}>{this.props.userInfo.name}</div>
           <i className="iconfont icon-moreunfold"></i>
         </div>
       </Popover> 
@@ -42,10 +43,12 @@ class Header extends Component<HeaderProps, {}> {
     </header>
   }
 }
-
+const mapStateToProps = (state: any) => ({
+  userInfo: state.Common.userInfo || {}
+})
 const mapDispatchToProps = (dispatch: any) => ({
   LogoutFlowFn: logoutFlow(dispatch)
 })
-export default connect(null, mapDispatchToProps)(Header)
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
 
 

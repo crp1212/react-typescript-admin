@@ -5,6 +5,7 @@ import {
   combineReducers
 } from 'redux'
 import Login from './login/reducer'
+import Common from './common/reducer'
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from './login/saga'
 
@@ -20,7 +21,8 @@ if (process.env.NODE_ENV !== 'production' ) { // 开发环境添加redux-devtool
 }
 
 let rootReducer = combineReducers({
-  Login
+  Login,
+  Common
 })
 let enhancer: any = compose.apply({}, args)
 const store = createStore(
