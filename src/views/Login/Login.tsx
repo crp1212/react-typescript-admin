@@ -1,15 +1,21 @@
 import React, { Component } from 'react'
 import LoginBg from '@/assets/image/33-hd.jpg'
 import styles from './Login.less'
+import { Dispatch } from 'redux'
 import { Input, Button } from 'antd'
 import { connect } from 'react-redux'
 import { loginFlow } from '@/store/login/flow'
 import { push as routerPush } from '@/utils/history-operate'
+import { initCommonInfo } from '@/init'
  
 interface LoginProps { 
   LoginFlowFn: (option: any) => {};
+  dispatch: Dispatch;
 }
-
+interface LoginParameter {
+  username: string;
+  password: string | number;
+}
 class Login extends Component<LoginProps, {}> {
   public state = {
     username: '',
@@ -21,26 +27,37 @@ class Login extends Component<LoginProps, {}> {
       [key]: value
     })
   }
+  public loginFlowFn (data: LoginParameter) {}
+  public componentDidMount () {
+    this.loginFlowFn = loginFlow(this.props.dispatch) // 初始化loginflow
+  }
   private async requestLoginFn () {
     if (this.state.Landing) { return }
     try {
       this.setState({ Landing: true })
-      let data = await this.props.LoginFlowFn({
+      await this.loginFlowFn({
         username: this.state.username,
         password: this.state.password
       })
-      this.loginSuceessHandel()
+      this.loginSuceessHandle()
     } catch (error) {
       this.setState({ Landing: false })
       console.error(error)
     }
-    // this.setState({ Landing: false })
   }
-  public loginSuceessHandel () {
+  public loginSuceessHandle () {
+    this.initCommonInfoFn() // 登录后重新初始化基础数据
     let pathname = '/index'
     routerPush({
       pathname
     })
+  }
+  public async initCommonInfoFn () {
+    try {
+      let data  = await initCommonInfo(this.props.dispatch)
+      console.log(data)
+    } catch (error) {
+    }
   }
   public render () { 
     let username = this.state.username
@@ -81,6 +98,6 @@ const mapDispatchToProps = (dispatch: any) => ({
   LoginFlowFn: loginFlow(dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, null)(Login)
 
 

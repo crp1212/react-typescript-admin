@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { hot } from 'react-hot-loader'
 import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
 import Login from '@/views/Login/Login'
 import Layout from '@/views/Layout/Index'
 import HistoryOperate, { HistoryChangeParams } from '@/utils/history-operate'
@@ -11,11 +12,13 @@ import { LogoutSuccessAction } from '@/store/login/action'
 import { InituserInfoFlow } from '@/store/common/flow'
 import { judgeRouteIsCustomLayout, customLayoutRoute } from '@/router/index'
 import routeRender from '@/router/routerRender.tsx'
+import { initCommonInfo } from './init'
  
 interface AppProps { 
   isLogin: boolean;
   LogoutSuccessAction: Function;
   InituserInfoFlowFn: Function;
+  dispatch: Dispatch;
 }
 class App extends Component<AppProps, {}> {
   public state = {
@@ -26,17 +29,16 @@ class App extends Component<AppProps, {}> {
   }
   private unWatch () {}
   public componentDidMount () {
-    console.log('didMount')
     watchUnLogin(this.unLoginHandle.bind(this))
     this.unWatch = HistoryOperate.watch(this.routerChange.bind(this), true)
-    this.initUserInfo()
+    this.initCommonInfoFn()
   }
   public componentWillUnmount () {
     this.unWatch()
   }
   public unLoginHandle () {
     this.hidePageLoading()
-    this.props.LogoutSuccessAction()
+    this.props.dispatch(LogoutSuccessAction())
     let currentPath = HistoryOperate.getPathname()
     if (currentPath !== '/login') {
       HistoryOperate.push({
@@ -48,7 +50,7 @@ class App extends Component<AppProps, {}> {
   public routerChange (routeParams: HistoryChangeParams) { // 路由变化通知
     let { pathname } = routeParams
     if (pathname === '/login') { // 如果是登录页面
-      this.props.LogoutSuccessAction()
+      this.props.dispatch(LogoutSuccessAction())
     }
     let isCustomLayout = judgeRouteIsCustomLayout(pathname)
     if (isCustomLayout !== this.state.isCustomLayout) {
@@ -64,12 +66,10 @@ class App extends Component<AppProps, {}> {
       })
     }
   }
-  public async initUserInfo () {
+  public async initCommonInfoFn () {
     try {
-      let data = await this.props.InituserInfoFlowFn()
-      console.log(data)
+      await initCommonInfo(this.props.dispatch)
     } catch (error) {
-      console.log(error)
     }
     this.hidePageLoading()
   }
@@ -92,10 +92,10 @@ const mapStateToProps = (state: any) => {
   }
 }
 
-const mapDispatchToProps = (dispatch: any) => ({
+/* const mapDispatchToProps = (dispatch: Dispatch) => ({
   InituserInfoFlowFn: InituserInfoFlow(dispatch),
   LogoutSuccessAction: () => dispatch(LogoutSuccessAction())
-})
-export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(App))
+}) */
+export default hot(module)(connect(mapStateToProps)(App))
 
 
