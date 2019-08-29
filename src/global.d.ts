@@ -24,5 +24,8 @@ declare global {
   interface StringObject {
     [propName: string]: string;
   }
+  interface FunctionObject {
+    [propName: string]: Function;
+  }
 }
 export default global

@@ -1,11 +1,33 @@
 import axios from 'axios'
 import qs from 'qs'
-import { errorNotify } from '@/utils/index'
+import { errorNotify, isObject } from '@/utils/index'
+import { compose } from 'redux'
 
+interface RequestOption { // 配置请求函数时的
+  closeGlobalErrorTips?: boolean; // 是否使用全局的的错误提示, 默认为true
+  successDataHandles?: string[]; // 指定对请求成功的data的处理机制
+}
+let defaultOptions: RequestOption = {}
 let unAuthHandleList: Function[] = []
+
+function commonAxiosSuccessDataHandle (data: any) {
+  let result = data.data
+  if (isObject(result)) {
+    Object.defineProperty(result, 'AxiosSourceData', {
+      get () {
+        return data
+      }
+    })
+  }
+  return result
+}
+let successDataHandleCollection: FunctionObject = { // 这里可以添加数据的处理器, 然后在定义接口时选用哪一个
+  commonAxiosSuccessDataHandle
+}
 function notifyUnAuth () { // 通知未认证
   unAuthHandleList.forEach((fn) => fn())
 }
+
 function formatParams (method: string, params: any, config?: any) { // 获取正确的参数格式
   let result
   if (['get', 'delete'].indexOf(method.toLowerCase()) > -1) {
@@ -22,6 +44,7 @@ function formatParams (method: string, params: any, config?: any) { // 获取正
   }
   return result
 }
+
 function getAxiosFn (methods: string) {
   let fn: (url: string, params: any, config?: any) => any = () => {}
   switch (methods) {
@@ -42,14 +65,20 @@ function getAxiosFn (methods: string) {
   }
   return fn
 }
-function requestSuccessHandle (res: any, resolve: any, reject: any) { // 成功请求的
+
+function requestSuccessHandle (res: any, resolve: any, reject: any, options = defaultOptions) { // 成功请求的
   let data = res.data // 返回的数据
   if (data.status === 401) { // 请求成功通过返回值判断是否登录的情况
     notifyUnAuth()
   }
-  resolve(data)
+  let successDataHandles = options.successDataHandles || ['commonAxiosSuccessDataHandle']
+  let dataHandle = compose.apply(null, successDataHandles.map(name => successDataHandleCollection[name]))
+  let result = dataHandle(data)
+  resolve(result)
 }
-function requestFailHandle (res: any, resolve: any, reject: any, closeGlobalErrorTips: boolean) {
+
+function requestFailHandle (res: any, resolve: any, reject: any, options = defaultOptions) {
+  let closeGlobalErrorTips = options.closeGlobalErrorTips === void 0 ? true : options.closeGlobalErrorTips
   let data = res.data // 如果的是由返回值的
   let message: string = typeof data === 'string' ? data : data.message
   reject(message)
@@ -58,7 +87,7 @@ function requestFailHandle (res: any, resolve: any, reject: any, closeGlobalErro
   }
 }
 
-export const fetch = (method: string, url: string, closeGlobalErrorTips = false) => {
+export const fetch = (method: string, url: string, options = defaultOptions) => {
   return (params = {}, config = {}) => new Promise((resolve, reject) => {
     let parameter = formatParams(method, params, config)
     let requesrFn: (url: string, params: any, config?: any) => any  = getAxiosFn(method)
@@ -67,10 +96,11 @@ export const fetch = (method: string, url: string, closeGlobalErrorTips = false)
       requestSuccessHandle(response, resolve, reject)
     }).catch((error: any) => {
       console.log(error)
-      requestFailHandle(error.response, resolve, reject, closeGlobalErrorTips)
+      requestFailHandle(error.response, resolve, reject, options)
     })
   })
 }
+
 export const watchUnLogin = (fn: Function) => {
   unAuthHandleList.push(fn)
 }
