@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Result, Button } from 'antd'
 import HistoryOperate from '@/utils/history-operate'
 
-class Common404 extends Component {
+class Common403 extends Component {
   public state = {
   }
   public onClick () {
@@ -12,15 +12,15 @@ class Common404 extends Component {
   }
   public render () {    
     return <Result
-      status="404"
-      title="404"
-      subTitle="Sorry, the page you visited does not exist."
+      status="403"
+      title="403"
+      subTitle="Sorry, you are not authorized to access this page."
       extra={<Button type="primary" onClick={this.onClick}>回到首页</Button>}
     />
   }
 }
 
 
-export default Common404
+export default Common403
 
 

@@ -52,7 +52,11 @@ class App extends Component<AppProps, {}> {
     if (pathname === '/login') { // 如果是登录页面
       this.props.dispatch(LogoutSuccessAction())
     }
-    let isCustomLayout = judgeRouteIsCustomLayout(pathname)
+    let judgeResult = judgeRouteIsCustomLayout(pathname)
+    if (judgeResult === void 0) { // undefined表示该路由是未定义路由, 此时保持不变即可
+      return
+    }
+    let isCustomLayout = judgeResult // true 或者 false
     if (isCustomLayout !== this.state.isCustomLayout) {
       this.setState({
         isCustomLayout

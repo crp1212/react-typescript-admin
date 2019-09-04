@@ -3,10 +3,11 @@ import CommonSuspenseContianer from '@/components/CommonSuspenseContianer'
 import IndexPage from '@/views/Index/Index'
 import LoadingPage from '@/views/Login/Login'
 import Common404 from '@/views/common/404'
+import Common403 from '@/views/common/403'
 import Template from '@/views/template/index'
 import { Route, Switch, Redirect } from 'react-router-dom'
  
-let routesConfig: RoutePramas[] = [
+let commonRoutes: RoutePramas[] = [ // 通用路由, 所有用户都能有
   {
     path: '/',
     exact: true,
@@ -25,7 +26,9 @@ let routesConfig: RoutePramas[] = [
     component: LoadingPage,
     hide: true,
     customLayout: true
-  },
+  }
+]
+let authRoutes = [
   {
     path: '/test',
     exact: false,
@@ -63,6 +66,10 @@ let routesConfig: RoutePramas[] = [
       }
     ]
   }
+]
+let routesConfig: RoutePramas[] = [
+  ...commonRoutes,
+  ...authRoutes
 ]
 let routesPathMapRouter: CommonObject = {} // 保存route的path和route配置的映射
 let customRoutesPathMapRouter: CommonObject = {} // 保存custom route的path和route配置的映射
@@ -124,6 +131,7 @@ initLayoutRoute(routes)
 
 export function generatorRoutesWithSubRoutes (route: RoutePramas) {
   return <Route path={route.path} exact={route.exact} key={route.path} render={ props => {
+    if (route.unAuth) { return <Common403></Common403> }
     if (route.to) { // 支持重定向配置
       return <Redirect from={route.path} to={route.to} />
     }
@@ -149,7 +157,7 @@ export const getRouterMetaByPathname = (pathname: string) => {
 }
 export const judgeRouteIsCustomLayout = (pathname: string) => { // 判断路由的是否是自定义路由
   let route: RoutePramas = routesPathMapRouter[pathname]
-  if (!route) { return true }
+  if (!route) { return void 0 } // 路由不存在的情况下, 应该人为是当前状态未知路由
   return !!route.customLayout
 }
 export const getRouterParent = (pathname: string) => {
@@ -157,3 +165,14 @@ export const getRouterParent = (pathname: string) => {
   return parent || {}
 }
 export const sideBarsRoutes = commonLayoutRoute.filter((item) => !item.hide) 
+export const setRouteUnAuth = function (route: RoutePramas, authKeyMap: BooleanObject) { // 设置路由是否有权限
+  route.unAuth = !authKeyMap[route.path]
+}
+export const setAuthRoutes = function (authKeyMap: BooleanObject) { // 传入权限路由后, 改变sideBarsRoutes
+  sideBarsRoutes.forEach((route) => {
+    setRouteUnAuth(route, authKeyMap)
+    if (route.children) {
+      route.children.forEach((route) => setRouteUnAuth(route, authKeyMap))
+    }
+  })
+}

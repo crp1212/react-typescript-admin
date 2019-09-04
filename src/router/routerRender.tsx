@@ -8,5 +8,5 @@ export default function routeRender (routes: RoutePramas[]) {
     <Route render={
       () => <Common404></Common404> 
     } />
-  </Switch>
+  </Switch> 
 }

@@ -8,6 +8,7 @@ import HistoryOperate, { HistoryChangeParams } from '@/utils/history-operate'
 import { sideBarsRoutes, getRouterMetaByPathname, getRouterParent } from '@/router/index'
 import { openNewRouterPathByNewWindow } from '@/utils/open-window'
 
+
 /* interface SideBarProps { 
   
 } */
@@ -40,6 +41,7 @@ class SideBar extends Component {
   public componentWillUnmount () {
     this.unWatch()
   }
+  
   public onOpenChange (openKeys: string[]) {
     this.setState({
       openKeys
@@ -68,6 +70,9 @@ class SideBar extends Component {
     }
   }
   public getMenuContent (routes: RoutePramas[]) { // 获取子菜单内容
+    if (this.state.loading) {
+      return ''
+    }
     return routes.map((route) => {
       let children = route.children
       if (children && children.length > 0) {
@@ -79,6 +84,9 @@ class SideBar extends Component {
   }
   public getSubMenuContent (route: RoutePramas) {
     let collapsed = this.state.collapsed
+    if (route.unAuth) { // 没有权限的不显示
+      return ''
+    }
     return <Menu.SubMenu key={route.path} title={
       <span className={styles.subMenu}>
         <Icon value="mzicon-setting"/>
@@ -91,6 +99,9 @@ class SideBar extends Component {
     </Menu.SubMenu>
   }
   public getMenuItemConent (route: RoutePramas) {
+    if (route.unAuth) { // 没有权限的不显示
+      return ''
+    }
     return <Menu.Item key={route.path}>
       {route.meta ? route.meta.title : ''}
       {/*  <Link to={route.path}></Link> */}

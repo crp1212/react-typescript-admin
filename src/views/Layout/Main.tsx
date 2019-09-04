@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { commonLayoutRoute as routes, generatorRoutesWithSubRoutes } from '@/router/index'
-import { Switch, Route } from 'react-router-dom'
-import { Alert } from 'antd'
 import styles from './layout.less'
+import routeRender from '@/router/routerRender'
 interface MainProps { 
   a?: string;
 }
@@ -15,17 +14,7 @@ class Main extends Component<MainProps, {}> {
   }
   public render () {    
     return <div className={styles.main}>
-      <Switch>
-        { this.getCustomRoutes(routes) }
-        <Route render={
-          () => <Alert
-            message="Error"
-            description="无匹配路由"
-            type="error"
-            showIcon
-          />
-        } />
-      </Switch>
+      { routeRender(routes) }
     </div>
   }
 }

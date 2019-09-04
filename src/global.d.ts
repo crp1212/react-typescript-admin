@@ -7,6 +7,7 @@ declare global {
     path: string;
     exact: boolean;
     component?: React.ComponentType<any>;
+    unAuth?: boolean; // 是否有权限查看
     to?: string;
     meta?: {
       title: string; // 文本
@@ -26,6 +27,9 @@ declare global {
   }
   interface FunctionObject {
     [propName: string]: Function;
+  }
+  interface BooleanObject{
+    [propName: string]: boolean;
   }
 }
 export default global
