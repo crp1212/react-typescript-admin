@@ -31,5 +31,8 @@ declare global {
   interface BooleanObject{
     [propName: string]: boolean;
   }
+  interface CommonComponentProps{
+    children: React.Component;
+  }
 }
 export default global
