@@ -1,9 +1,11 @@
 import React from 'react'
 import Input from './Input'
+import Button from './Button'
 import { CommonProps } from './form.d'
 
 let FormComponent: ReactComponentObject<CommonProps> = {
-  Input
+  Input,
+  Button
 }
 export function getFormComponent (config: NormalListUnitConfig, key: string | number) {
   if (config.hide) { return '' } // 标记了隐藏直接输出为空

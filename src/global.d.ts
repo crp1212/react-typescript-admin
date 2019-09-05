@@ -37,10 +37,15 @@ declare global {
   interface CommonComponentProps{
     children: React.Component;
   }
+  interface NormalListRequestConfig {
+    url: string;
+    defaultParams?: StringObject;
+  }
   interface NormalListConfig { // NormalList的基本配置
     header: any;
     table?: any;
     pagination?: any;
+    requestTarget?: NormalListRequestConfig;
   }
   interface NormalListUnitConfig { // 最小单元配置
     UIType: string; // 必须有ui类型
