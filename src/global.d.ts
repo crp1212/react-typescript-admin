@@ -22,6 +22,9 @@ declare global {
   interface CommonObject {
     [propName: string]: any;
   }
+  interface ReactComponentObject<T> {
+    [propName: string]: React.ComponentType<T>;
+  }
   interface StringObject {
     [propName: string]: string;
   }
@@ -33,6 +36,19 @@ declare global {
   }
   interface CommonComponentProps{
     children: React.Component;
+  }
+  interface NormalListConfig { // NormalList的基本配置
+    header: any;
+    table?: any;
+    pagination?: any;
+  }
+  interface NormalListUnitConfig { // 最小单元配置
+    UIType: string; // 必须有ui类型
+    key: string; // 必有设定key
+    hide?: boolean; // 通过该字段表示是否显示, true为不显示
+    actionType?: string; // ui的响应类型, 可选
+
+    [propName: string]: any;
   }
 }
 export default global
