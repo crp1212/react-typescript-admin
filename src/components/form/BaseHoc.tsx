@@ -21,16 +21,19 @@ export default (WarppedComponent: React.ComponentType<CommonProps>) => {
     }
     public onChange (obj: CommonObject) {
       let config = this.props.config
-      console.log('通知change事件', {
+      let onAction = this.props.onAction
+      onAction({
         ...obj,
         key: config.key,
-        config
+        config,
+        actionType: 'change'
       })
     }
     public onAction (obj: CommonObject) {
-      console.log('通知action事件', obj)
+      let onAction = this.props.onAction
+      onAction(obj)
     }
-    private static getDerivedStateFromProps (props: any) {
+    public static getDerivedStateFromProps (props: any) {
       if (props.config.UIType === 'Button') {
         BaseHoc.width = ''
       }
