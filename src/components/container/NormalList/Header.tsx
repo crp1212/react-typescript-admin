@@ -8,6 +8,7 @@ interface HeaderConfig {
 }
 interface HeaderProps { 
   config: HeaderConfig;
+  onAction: Function;
 }
 
 class Header extends Component<HeaderProps, {}> {
@@ -16,8 +17,11 @@ class Header extends Component<HeaderProps, {}> {
   public componentDidMount () {
     
   }
+  public onAction = (option: any) => {
+    this.props.onAction(option)
+  }
   public getRenderResultList (arr: NormalListUnitConfig[]) {
-    return arr.map((config, index) => getFormComponent(config, index))
+    return arr.map((config, index) => getFormComponent(config, index, this.onAction))
   }
   public render () {    
     let { list, rightList } = this.props.config

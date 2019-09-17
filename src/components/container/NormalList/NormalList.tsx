@@ -5,6 +5,8 @@ import Pagination from './Pagination'
 import styles from './NormalList.less'
 import { isString, isFunction } from '@/utils/index'
 import { fetch } from '@/apis/index'
+import actionHandle from '@/utils/actionHandle'
+
 
 interface NormalListProps { 
   config: NormalListConfig;
@@ -17,7 +19,8 @@ class NormalList extends Component<NormalListProps, {}> {
   public queryOption: StringObject = {}
   public state = {
     tableLoading: true,
-    tableData: []
+    tableData: [],
+    total: 0
   }
   public componentDidMount () { // 加载数据
     let requestTarget = this.props.requestTarget || this.props.config.requestTarget
@@ -33,8 +36,10 @@ class NormalList extends Component<NormalListProps, {}> {
     this.updateData()
   }
   public async updateData () { // 更新数据
+    this.setState({ tableLoading: true })
     let defaultQuery = this.props.defaultQuery || {}
     let tableData = []
+    let total
     try {
       let data = await this.requestFn({
         ...defaultQuery,
@@ -44,22 +49,33 @@ class NormalList extends Component<NormalListProps, {}> {
         ...obj,
         key: index
       }))
+      total = data.total
     } catch (error) {
       
     }
     this.setState({
       tableData,
-      tableLoading: false
+      tableLoading: false,
+      total
+    })
+  }
+  public onActionHandle (parameter: CommonObject) {
+    actionHandle({
+      parameter,
+      queryOption: this.queryOption,
+      requestFn: this.updateData,
+      context: this
     })
   }
   public render () {  
-    let { tableData, tableLoading } = this.state
+    let { tableData, tableLoading, total } = this.state
     let headerConfig = this.props.config.header  
     let tableConfig = this.props.config.table
+    let paginationConfig = this.props.config.pagination
     return <div className={'rc-col ' + styles.container}>
-      <Header config={headerConfig}></Header>
+      <Header config={headerConfig} onAction={this.onActionHandle.bind(this)}></Header>
       <Table config={tableConfig} tableData={tableData} tableLoading={tableLoading}></Table>
-      <Pagination></Pagination>
+      <Pagination config={paginationConfig} total={total} onAction={this.onActionHandle.bind(this)}></Pagination>
     </div>
   }
 }
