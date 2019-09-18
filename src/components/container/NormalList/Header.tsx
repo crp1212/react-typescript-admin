@@ -4,6 +4,7 @@ import { getFormComponent } from '@/components/form/Index'
 interface HeaderConfig {
   list: NormalListUnitConfig[];
   rightList: NormalListUnitConfig[];
+  query?: boolean; // 当为false的时候, header中值改变时不做query的hack操作
   rightListWidth?: string | number;
 }
 interface HeaderProps { 
@@ -18,6 +19,11 @@ class Header extends Component<HeaderProps, {}> {
     
   }
   public onAction = (option: any) => {
+    let actionType = option.actionType
+    let config = this.props.config
+    if (actionType === 'change' && config.query !== false) { // change的操作检测, header默认改变是要查询的, 这里左一层修改
+      option.actionType = 'query'
+    }
     this.props.onAction(option)
   }
   public getRenderResultList (arr: NormalListUnitConfig[]) {
