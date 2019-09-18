@@ -3,6 +3,11 @@ import { Input as AntdInput } from 'antd'
 import { CommonProps } from './form.d'
 import BaseHoc from './BaseHoc'
 import Icon from '@/components/Icon/Icon'
+import { debouce } from '@/utils/index'
+
+let debouceWarp = debouce(function (fn: Function) {
+  fn()
+}, 500)
 class Input extends Component<CommonProps, {}> {
   public state = {
     value: '',
@@ -17,16 +22,22 @@ class Input extends Component<CommonProps, {}> {
       value,
       isWarning: false
     })
-    this.props.onChange({
-      value
+    debouceWarp(() => {
+      this.props.onChange({
+        value
+      })
     })
+    
+  }
+  public noticeChange () {
+
   }
   
   public render () {    
     let { placeholder, prefixIcon } = this.props.config
     let baseConfig = this.props.baseConfig
     let { value } = this.state
-    let prefix = prefixIcon ? <Icon value={prefixIcon} size={14}></Icon> : ''
+    let prefix = prefixIcon ? <Icon value={prefixIcon} size={12}></Icon> : ''
     return <AntdInput
       {...baseConfig} 
       allowClear 
