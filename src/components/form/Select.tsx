@@ -7,6 +7,9 @@ import { fetch } from '@/apis/index'
 
 let { Option } = AntdSelect
 
+interface SelectConfig { // Select配置说明
+  mode?: ['multiple', 'tags']; // 是否启用的muliple和tags模式
+}
 interface SelectOption extends CommonProps {
   label: string;
   value: string | number;
@@ -60,14 +63,14 @@ class Select extends Component<CommonProps, {}> {
       return <Option value={option.value} key={option.value}>{option.label}</Option>
     })
   }
-  public onChange (value: string | number) {
+  public onChange (value: string | number | string[] | number[]) {
     this.props.onChange({
       value
     })
   }
   public render () {   
     let { loading } = this.state
-    let { value, placeholder } = this.props.config
+    let { value, placeholder, mode } = this.props.config
     let { baseWidth } = this.props 
     return <AntdSelect 
       defaultValue={value} 
@@ -75,6 +78,7 @@ class Select extends Component<CommonProps, {}> {
       style={{ width: baseWidth }}
       onChange={this.onChange.bind(this)}
       loading={loading}
+      mode={mode}
     >
       { this.getOptions(this.state.options) }
     </AntdSelect>
