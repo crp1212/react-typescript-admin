@@ -1,16 +1,21 @@
 import React, { Component } from 'react'
 import { CommonProps } from './form.d'
+import styles from './Form.less'
 
 
 
 export default (WarppedComponent: React.ComponentType<CommonProps>) => {
   class BaseHoc extends Component<CommonProps, {}> {
     private static size = 'default'
-    private static  width = '220'
+    private static  width = 220
     public state = {
+      baseWidth: ''
+    }
+    public getWidth () {
+      return this.props.config.width || this.props.width || BaseHoc.width
     }
     public getStyle () {
-      let width = this.props.config.width || this.props.width || BaseHoc.width
+      let width = this.getWidth()
       return {
         width: width ? width + 'px' : ''
       }
@@ -46,12 +51,13 @@ export default (WarppedComponent: React.ComponentType<CommonProps>) => {
       let wrapConfig = {
         ...this.props
       }
-      return <div style={ this.getStyle() }>
+      return <div style={ this.getStyle() } className={styles.headerItem}>
         <WarppedComponent 
           {...wrapConfig}
           baseConfig={baseConfig}
           onChange={this.onChange.bind(this)}
           onAction={this.onAction.bind(this)}
+          baseWidth={this.getWidth()}
         />
           
       </div>
