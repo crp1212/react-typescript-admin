@@ -20,6 +20,7 @@ interface AppProps {
   InituserInfoFlowFn: Function;
   dispatch: Dispatch;
 }
+let unWatch: Function
 class App extends Component<AppProps, {}> {
   public state = {
     a: '2',
@@ -27,14 +28,13 @@ class App extends Component<AppProps, {}> {
     useLayout: true,
     isCustomLayout: true
   }
-  private unWatch () {}
   public componentDidMount () {
     watchUnLogin(this.unLoginHandle.bind(this))
-    this.unWatch = HistoryOperate.watch(this.routerChange.bind(this), true)
+    unWatch = HistoryOperate.watch(this.routerChange.bind(this), true)
     this.initCommonInfoFn()
   }
   public componentWillUnmount () {
-    this.unWatch()
+    unWatch()
   }
   public unLoginHandle () {
     this.hidePageLoading()

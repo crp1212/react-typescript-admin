@@ -15,6 +15,7 @@ import { openNewRouterPathByNewWindow } from '@/utils/open-window'
 function getToolTips (collapsed: boolean) {
   return collapsed ? '展开菜单' : '收缩菜单'
 }
+let unWatch: Function
 class SideBar extends Component {
   public state = {
     loading: false,
@@ -25,9 +26,8 @@ class SideBar extends Component {
     toolTips: getToolTips(false)
   }
   public currentPath = ''
-  public unWatch () {}
   public componentDidMount () {
-    this.unWatch = HistoryOperate.watch(this.routerChange.bind(this), true)
+    unWatch = HistoryOperate.watch(this.routerChange.bind(this), true)
   }
   public routerChange (routeParams: HistoryChangeParams) {
     let { pathname } = routeParams
@@ -39,7 +39,7 @@ class SideBar extends Component {
     })
   }
   public componentWillUnmount () {
-    this.unWatch()
+    unWatch()
   }
   
   public onOpenChange (openKeys: string[]) {
