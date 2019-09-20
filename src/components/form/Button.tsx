@@ -13,11 +13,12 @@ class Button extends Component<CommonProps, {}> {
     onAction && onAction(this.props.config)
   }
   public render () {
-    let { text, type } = this.props.config    
+    let { text, type, icon } = this.props.config    
     let baseConfig = this.props.baseConfig
     return <AntdButton
       {...baseConfig}
       type={type}
+      icon={icon || ''}
       onClick={ this.onClick.bind(this) }
     >{text}</AntdButton>  
   }
