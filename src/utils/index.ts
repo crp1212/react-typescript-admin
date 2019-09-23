@@ -78,3 +78,14 @@ export const detachArrayByCondition = function (arr: any[],fn: Function) { // ца
   }
   return result
 }
+export function debouce (fn: Function, time: number, context?: any) {
+  let timeID: any
+  let wrapFn = function (...args: any[]) {
+    /* let args = [].slice.call(arguments) */
+    clearTimeout(timeID)
+    timeID = setTimeout(() => {
+      fn.apply(context, args)
+    }, time)
+  }
+  return wrapFn
+}
