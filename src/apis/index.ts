@@ -80,7 +80,7 @@ function requestSuccessHandle (res: any, resolve: any, reject: any, options = de
 }
 
 function requestFailHandle (res: any, resolve: any, reject: any, options = defaultOptions) {
-  let closeGlobalErrorTips = options.closeGlobalErrorTips === void 0 ? true : options.closeGlobalErrorTips
+  let closeGlobalErrorTips = options.closeGlobalErrorTips
   let data = res.data // 如果的是由返回值的
   let message: string = typeof data === 'string' ? data : data.message
   reject(message)
