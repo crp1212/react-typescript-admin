@@ -5,6 +5,7 @@ import BaseHoc from './BaseHoc'
 import Icon from '@/components/Icon/Icon'
 import { debouce } from '@/utils/index'
 
+let TextArea = AntdInput.TextArea
 let debouceWarp = debouce(function (fn: Function) {
   fn()
 }, 500)
@@ -34,17 +35,25 @@ class Input extends Component<CommonProps, {}> {
   }
   
   public render () {    
-    let { placeholder, prefixIcon } = this.props.config
+    let { placeholder, prefixIcon, type, textareaConfig, inputConfig } = this.props.config
+
     let baseConfig = this.props.baseConfig
     let { value } = this.state
     let prefix = prefixIcon ? <Icon value={prefixIcon} size={12}></Icon> : ''
-    return <AntdInput
+    let isTextarea = type === 'textarea'
+    let RenderResult = isTextarea ? TextArea : AntdInput
+    let inputProp = isTextarea ? {} : {
+      ...inputConfig,
+      allowClear: true
+    }
+    return <RenderResult
       {...baseConfig} 
-      allowClear 
+      {...inputProp} 
       value={value}
       prefix={prefix}
       placeholder={placeholder || '请输入'} 
       onChange={ this.onChange.bind(this) }
+      {...textareaConfig}
     />
   }
 }
