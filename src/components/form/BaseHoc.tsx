@@ -40,7 +40,7 @@ export default (WarppedComponent: React.ComponentType<CommonProps>) => {
     }
     public static getDerivedStateFromProps (props: any) {
       if (props.config.UIType === 'Button') {
-        BaseHoc.width = ''
+        BaseHoc.width = 0
       }
       return null
     }
