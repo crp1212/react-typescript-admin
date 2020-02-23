@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Header from './Header'
 import Table from './Table'
+import FormModal from './FormModal'
 import Pagination from './Pagination'
 import styles from './NormalList.less'
 import { isString, clearEmptyProperty } from '@/utils/index'
@@ -17,6 +18,7 @@ interface NormalListProps {
 
 class NormalList extends Component<NormalListProps, {}> {
   public requestFn: any = null
+  public formModalRef: any = null
   public tableRef: any;
   public queryOption: StringObject = {}
   public state = {
@@ -76,7 +78,7 @@ class NormalList extends Component<NormalListProps, {}> {
     onAction && onAction(parameter)
   }
   public openDialog () {
-    console.log('open dialog')
+    this.formModalRef.showModal()
   }
   public tableFilter (parameter: CommonObject) {
     let filterKeyMap = parameter.filterKeyMap
@@ -86,11 +88,16 @@ class NormalList extends Component<NormalListProps, {}> {
     let { tableData, tableLoading, total } = this.state
     let headerConfig = this.props.config.header  
     let tableConfig = this.props.config.table
+    let formModalConfig = this.props.config.formConfig
+    console.log(formModalConfig)
     let paginationConfig = this.props.config.pagination
     return <div className={'rc-col ' + styles.container}>
       <Header config={headerConfig} onAction={this.onActionHandle.bind(this)} tableConfig={tableConfig}></Header>
       <Table config={tableConfig} tableData={tableData} tableLoading={tableLoading} onAction={this.onActionHandle.bind(this)} ref={(ref) => { this.tableRef = ref } }></Table>
       <Pagination config={paginationConfig} total={total} onAction={this.onActionHandle.bind(this)}></Pagination>
+      {
+        formModalConfig ? <FormModal config={formModalConfig} onAction={this.onActionHandle.bind(this)} ref={(ref) => { this.formModalRef = ref } }></FormModal> : ''
+      }
     </div>
   }
 }

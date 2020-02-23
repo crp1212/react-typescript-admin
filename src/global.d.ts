@@ -46,12 +46,14 @@ declare global {
     table?: any;
     pagination?: any;
     requestTarget?: NormalListRequestConfig;
+    formConfig?: any;
   }
   interface NormalListUnitConfig { // 最小单元配置
     UIType: string; // 必须有ui类型
     key: string; // 必有设定key
     hide?: boolean; // 通过该字段表示是否显示, true为不显示
     actionType?: string; // ui的响应类型, 可选
+    getWatchHandle?: Function; // 获取可监听配置
     arraySeparators?: string; // 数组数据的连接符, 当需要把数组的value转化为字符串时使用
     [propName: string]: any;
   }

@@ -51,7 +51,7 @@ export const getQueryStringArgs = (url: string) => {
   }
   return args
 }
-export const clearEmptyProperty = function (obj: CommonObject | null): CommonObject | null {
+export const clearEmptyProperty = function (obj: CommonObject | null | undefined): CommonObject | null {
   if (!obj) { return null }
   let tem: CommonObject = {}
   Object.keys(obj).forEach((key) => {

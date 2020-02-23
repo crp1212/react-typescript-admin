@@ -24,12 +24,14 @@ class Index extends Component{
       setAuthRoutes({
         '/index': true,
         '/test': true,
-        '/test/v': true
+        '/test/v': true,
+        '/system': true,
+        '/system/manager-list': true
       })
+      this.setState({ pageLoading: false })
     } catch (error) {
       
     }
-    this.setState({ pageLoading: false })
   }
   public render () {
     let pageLoading = this.state.pageLoading

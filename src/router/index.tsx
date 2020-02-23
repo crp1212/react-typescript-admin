@@ -1,11 +1,12 @@
 import React from 'react'
-import CommonSuspenseContianer from '@/components/CommonSuspenseContianer'
+
 import IndexPage from '@/views/Index/Index'
 import LoadingPage from '@/views/Login/Login'
 import Common404 from '@/views/common/404'
 import Common403 from '@/views/common/403'
 import Template from '@/views/template/index'
 import { Route, Switch, Redirect } from 'react-router-dom'
+import SystemRoute from './system'
  
 let commonRoutes: RoutePramas[] = [ // 通用路由, 所有用户都能有
   {
@@ -65,7 +66,8 @@ let authRoutes = [
         component: () => <div>b</div>
       }
     ]
-  }
+  },
+  SystemRoute
 ]
 let routesConfig: RoutePramas[] = [
   ...commonRoutes,

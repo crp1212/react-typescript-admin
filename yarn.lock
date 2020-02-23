@@ -7513,10 +7513,10 @@ typescript-tuple@^2.1.0:
   dependencies:
     typescript-compare "^0.0.2"
 
-typescript@^3.5.3:
-  version "3.5.3"
-  resolved "http://r.cnpmjs.org/typescript/download/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
-  integrity sha1-yDD2V/k/HqhGgZ6SkJL1/lmD6Xc=
+typescript@^3.7.0-dev.20190921:
+  version "3.7.0-dev.20190921"
+  resolved "http://r.cnpmjs.org/typescript/download/typescript-3.7.0-dev.20190921.tgz#40c850919e43938e169b2ab742e1b66a188957d5"
+  integrity sha1-QMhQkZ5Dk44Wmyq3QuG2ahiJV9U=
 
 ua-parser-js@^0.7.18:
   version "0.7.20"
