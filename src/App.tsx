@@ -72,7 +72,7 @@ class App extends Component<AppProps, {}> {
   }
   public async initCommonInfoFn () {
     try {
-      await initCommonInfo(this.props.dispatch)
+      // await initCommonInfo(this.props.dispatch)
     } catch (error) {
     }
     this.hidePageLoading()

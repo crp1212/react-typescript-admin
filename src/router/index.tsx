@@ -31,7 +31,7 @@ let commonRoutes: RoutePramas[] = [ // 通用路由, 所有用户都能有
   }
 ]
 let authRoutes = [
-  {
+  /* {
     path: '/test',
     exact: false,
     component: Template,
@@ -68,7 +68,7 @@ let authRoutes = [
       }
     ]
   },
-  SystemRoute,
+  SystemRoute, */
   EyedropRoute
 ]
 let routesConfig: RoutePramas[] = [
