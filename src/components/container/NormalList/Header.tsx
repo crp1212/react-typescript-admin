@@ -30,7 +30,7 @@ class Header extends Component<HeaderProps, {}> {
     }
     this.props.onAction(option)
   }
-  public getRenderResultList (arr: NormalListUnitConfig[]) {
+  public getRenderResultList (arr: NormalListUnitConfig[] = []) {
     return arr.map((config, index) => getFormComponent(config, index, this.onAction, {
       tableConfig: this.props.tableConfig
     }))

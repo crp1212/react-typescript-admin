@@ -7,6 +7,7 @@ import Common403 from '@/views/common/403'
 import Template from '@/views/template/index'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import SystemRoute from './system'
+import EyedropRoute from './eyedrop'
  
 let commonRoutes: RoutePramas[] = [ // 通用路由, 所有用户都能有
   {
@@ -67,7 +68,8 @@ let authRoutes = [
       }
     ]
   },
-  SystemRoute
+  SystemRoute,
+  EyedropRoute
 ]
 let routesConfig: RoutePramas[] = [
   ...commonRoutes,

@@ -14,6 +14,7 @@ interface NormalListProps {
   requestTarget?: string | Function ; // string的时候是一个get请求的地址 Function则是直接调用获得返回值的
   defaultQuery?: StringObject; // 仅在requestTarget存在时有效
   onAction?: Function;
+  externalTableData: CommonObject[]; // 仅在没有requestTarget的时候有效
 }
 
 class NormalList extends Component<NormalListProps, {}> {
@@ -28,6 +29,7 @@ class NormalList extends Component<NormalListProps, {}> {
   }
   public componentDidMount () { // 加载数据
     let requestTarget = this.props.requestTarget || this.props.config.requestTarget
+    if (!requestTarget) { return }
     let request
     if (!requestTarget) {
       console.warn('没有请求数据的配置')

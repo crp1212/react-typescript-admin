@@ -26,7 +26,9 @@ class Index extends Component{
         '/test': true,
         '/test/v': true,
         '/system': true,
-        '/system/manager-list': true
+        '/system/manager-list': true,
+        '/eyedrop': true,
+        '/eyedrop/time-list': true,
       })
       this.setState({ pageLoading: false })
     } catch (error) {
