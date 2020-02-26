@@ -6,6 +6,7 @@ const ora = require('ora')
 const chalk = require('chalk')
 const log = require('./writelog.js')
 const process = require('process')
+const gulp = require('gulp')
 var start = Date.now()
 const {
     BundleAnalyzerPlugin
@@ -32,6 +33,7 @@ rm(config.product.assetsPath, err => {
             chunkModules: false
         }) + '\n\n'
         process.stdout.write(str)
+        gulp.src(config.product.staticGulpPublicConfig).pipe(gulp.dest(config.product.distPath))
         console.log(chalk.green(`打包用时: ${Date.now() - start}ms`)) // SizeFormatHelpers
         var jsonobj = stats.toJson()
         log(jsonobj)
