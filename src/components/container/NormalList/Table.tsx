@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import styles from './NormalList.less'
 import { Table as AntdTable } from 'antd'
 import LoadingCover from '@/components/LoadingCover'
+import { watchWindowResize } from '@/utils/index'
+
 interface TableConfig {
   tableHeader: CommonObject[];
   tableSize: 'default' | 'middle' | 'small';
@@ -18,8 +20,10 @@ interface TableRef {
 
 class Table extends Component<TableProps, {}> implements TableRef {
   public state = {
-    columns: []
+    columns: [],
+    tableContainerHeight: ''
   }
+  public tableRef: HTMLDivElement | null = null
   public onClick (config: StringObject, row: any) { // row 是的列表单条数据
     this.props.onAction({
       ...config,
@@ -31,10 +35,12 @@ class Table extends Component<TableProps, {}> implements TableRef {
     let result
     let clickHandle = this.onClick
     let _this = this
+    let baseConfig = this.getColumnsBaseConfig(obj)
     if (type === 'index') {
       result = {
         title: '#',
         dataIndex: '',
+        ...baseConfig,
         render (value: any, record: any, index: number) {
           return index + 1
         }
@@ -42,6 +48,7 @@ class Table extends Component<TableProps, {}> implements TableRef {
     } else if (type === 'operator') {
       result = {
         title: obj.label,
+        ...baseConfig,
         render (value: any, record: any, index: number) {
           return <div className='text-btn-group'>
             { obj.operatorConfig.map((item: StringObject, index: number) =>  (<div key={index} onClick={clickHandle.bind(_this, item, record)}>{item.text}</div>))}
@@ -56,12 +63,17 @@ class Table extends Component<TableProps, {}> implements TableRef {
       { list.map((item, index) => <div key={index} style={item.style || {}}>{item.text}</div>) }
     </div>
   }
+  public getColumnsBaseConfig (obj: CommonObject) {
+    let { width } = obj
+    return { width }
+  }
   public getNormalColumnsItem (obj: CommonObject) {
     let renderListTableItem = this.renderListTableItem
     let { keyMap, dealFunction, color, getListFn, list } = obj
     return {
       title: obj.label,
       dataIndex: obj.key,
+      ...this.getColumnsBaseConfig(obj),
       render (value: any, record: CommonObject) {
         let result = value
         let style = color ? { color } : {}
@@ -71,7 +83,7 @@ class Table extends Component<TableProps, {}> implements TableRef {
           let renderList = getListFn ? getListFn(record) : list
           return renderListTableItem(renderList)
         }
-        return <div style={style}>{result}</div>
+        return <div style={style} >{result}</div>
       }
     }
   }
@@ -90,24 +102,37 @@ class Table extends Component<TableProps, {}> implements TableRef {
   }
   public componentDidMount () {
     this.initColumns()
+    watchWindowResize(this.setTableScrollY.bind(this))
+    this.setTableScrollY()
+  }
+  public setTableScrollY () {
+    let el = this.tableRef
+    if (!el) { return }
+    let info = el.getBoundingClientRect()
+    let height = info.height
+    // let width = el.getBoundingClientRect().width
+    this.setState({ tableContainerHeight: height - 40 })
+
   }
   public getTableContent () {
     let columns = this.state.columns
     let dataSource = this.props.tableData || []
     let size = this.props.config.tableSize || 'small'
     if (columns.length === 0) { return '' }
+    let tableContainerHeight = this.state.tableContainerHeight
     return <AntdTable  
       bordered
       columns={columns} 
       dataSource={dataSource} 
       size={size} 
       pagination={false} 
+      scroll={{ y: tableContainerHeight }}
     ></AntdTable>  
   }
   public render () {    
     let tableContent = this.getTableContent()
     let tableLoading = this.props.tableLoading || false
-    return <div className={styles.table}>
+    return <div className={styles.table} ref={(ref => { this.tableRef = ref })}>
       <LoadingCover loading={tableLoading}></LoadingCover>  
       {tableContent}
     </div>

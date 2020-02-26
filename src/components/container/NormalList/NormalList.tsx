@@ -14,7 +14,7 @@ interface NormalListProps {
   requestTarget?: string | Function ; // string的时候是一个get请求的地址 Function则是直接调用获得返回值的
   defaultQuery?: StringObject; // 仅在requestTarget存在时有效
   onAction?: Function;
-  externalTableData: CommonObject[]; // 仅在没有requestTarget的时候有效
+  externalTableData?: CommonObject[]; // 仅在没有requestTarget的时候有效
 }
 
 class NormalList extends Component<NormalListProps, {}> {
@@ -23,11 +23,22 @@ class NormalList extends Component<NormalListProps, {}> {
   public tableRef: any;
   public queryOption: StringObject = {}
   public state = {
-    tableLoading: true,
+    tableLoading: false,
     tableData: [],
     total: 0
   }
   public componentDidMount () { // 加载数据
+    if (this.props.externalTableData) {
+      this.setState({
+        tableData: this.props.externalTableData
+      })
+    } else {
+      this.initRequestMode()
+    }
+    
+  }
+  public initRequestMode () { // 初始化表格数据请求模式
+    this.setState({ tableLoading: true })
     let requestTarget = this.props.requestTarget || this.props.config.requestTarget
     if (!requestTarget) { return }
     let request
@@ -94,9 +105,13 @@ class NormalList extends Component<NormalListProps, {}> {
     console.log(formModalConfig)
     let paginationConfig = this.props.config.pagination
     return <div className={'rc-col ' + styles.container}>
-      <Header config={headerConfig} onAction={this.onActionHandle.bind(this)} tableConfig={tableConfig}></Header>
+      {
+        headerConfig ? <Header config={headerConfig} onAction={this.onActionHandle.bind(this)} tableConfig={tableConfig}></Header> : ''
+      }
       <Table config={tableConfig} tableData={tableData} tableLoading={tableLoading} onAction={this.onActionHandle.bind(this)} ref={(ref) => { this.tableRef = ref } }></Table>
-      <Pagination config={paginationConfig} total={total} onAction={this.onActionHandle.bind(this)}></Pagination>
+      {
+        paginationConfig ? <Pagination config={paginationConfig} total={total} onAction={this.onActionHandle.bind(this)}></Pagination> : ''
+      }
       {
         formModalConfig ? <FormModal config={formModalConfig} onAction={this.onActionHandle.bind(this)} ref={(ref) => { this.formModalRef = ref } }></FormModal> : ''
       }

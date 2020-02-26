@@ -1,8 +1,12 @@
 .container{
   flex-grow: 1;
+  height: 0;
+  padding: 16px 0;
+  > div + div{
+    margin-top: 16px
+  }
 }
 .header{
-  padding-bottom: 16px;
   >div:first-child{
     width: 70%;
   }
@@ -20,6 +24,7 @@
 .table{
   flex-grow: 1;
   position: relative;
+  height: 0;
 }
 .formItem{
   >div{
