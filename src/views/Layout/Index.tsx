@@ -19,8 +19,6 @@ class Index extends Component{
   }
   public async initRouterAuth () { // 根据权限初始化路由
     try {
-      /* let data = await getRouterAuth()
-      console.log(data) */
       setAuthRoutes({
         '/index': true,
         '/test': true,

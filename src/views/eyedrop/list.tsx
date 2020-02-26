@@ -15,7 +15,7 @@ interface ListState {
 class List extends Component<ListProps, {}> {
   public state: ListState = {
     dataSource: [],
-    eyedropName: ''
+    eyedropName: '玻璃酸钠'
   }
   public componentDidMount () {
     let data = getCacheData()
@@ -45,10 +45,10 @@ class List extends Component<ListProps, {}> {
     const {Option} = Select
     return <div className="rc-col" data-full='1'>
       <div style={{padding: '16px 0'}}>
-        <Select defaultValue="玻璃酸钠" style={{ width: 120 }} onChange={this.handleChange.bind(this)}>
+        <Select defaultValue={this.state.eyedropName} style={{ width: 120 }} onChange={this.handleChange.bind(this)}>
           <Option value="玻璃酸钠">玻璃酸钠</Option>
           <Option value="典必殊">典必殊</Option>
-          <Option value="美多丽">美多丽</Option>
+          <Option value="艾唯多">艾唯多</Option>
         </Select>
         <Button type="primary" onClick={this.addEyedrop.bind(this)} style={{marginLeft: '16px'}}>添加</Button>
       </div>

@@ -28,10 +28,11 @@ class App extends Component<AppProps, {}> {
     useLayout: true,
     isCustomLayout: true
   }
-  public componentDidMount () {
+  public async componentDidMount () {
     watchUnLogin(this.unLoginHandle.bind(this))
     unWatch = HistoryOperate.watch(this.routerChange.bind(this), true)
-    this.initCommonInfoFn()
+    // await this.initCommonInfoFn()
+    this.hidePageLoading()
   }
   public componentWillUnmount () {
     unWatch()
@@ -72,10 +73,10 @@ class App extends Component<AppProps, {}> {
   }
   public async initCommonInfoFn () {
     try {
-      // await initCommonInfo(this.props.dispatch)
+      await initCommonInfo(this.props.dispatch)
+      return
     } catch (error) {
     }
-    this.hidePageLoading()
   }
   public render () {    
     let { isCustomLayout, pageLoading } = this.state

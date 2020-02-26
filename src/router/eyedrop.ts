@@ -5,11 +5,11 @@ import CommonSuspenseContianer from '@/components/CommonSuspenseContianer'
 let EyedropRoute = {
   path: '/eyedrop',
   exact: false,
-  component: Index,
+  component:  () => CommonSuspenseContianer(lazy(() => import('@/views/eyedrop/list.tsx'))),
   meta: {
     title: '眼药水'
   },
-  children: [
+  /* children: [
     {
       path: '/time-list',
       exact: true,
@@ -19,6 +19,6 @@ let EyedropRoute = {
       },
       component:  () => CommonSuspenseContianer(lazy(() => import('@/views/eyedrop/list.tsx')))
     }
-  ]
+  ] */
 }
 export default EyedropRoute
