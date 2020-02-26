@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "node build/dev.server.js",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "docker:update": "docker cp ./dist eyedrop:/dist"
   },
   "dependencies": {
     "antd": "^3.20.3",
@@ -55,6 +56,7 @@
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-typescript": "^0.14.0",
     "file-loader": "^4.1.0",
+    "gulp": "^4.0.2",
     "hasha": "^5.0.0",
     "html-webpack-plugin": "^3.2.0",
     "less": "^3.9.0",

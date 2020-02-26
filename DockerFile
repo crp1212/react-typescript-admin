@@ -1,0 +1,6 @@
+FROM nginx:1.13
+
+# 复制node-example目录
+COPY /dist /web
+COPY /nginx/default.conf /etc/nginx/conf.d/default.conf
+
