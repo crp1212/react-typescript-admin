@@ -42,8 +42,8 @@ declare global {
     defaultParams?: StringObject;
   }
   interface NormalListConfig { // NormalList的基本配置
-    header: any;
-    table?: any;
+    header?: any;
+    table: any;
     pagination?: any;
     requestTarget?: NormalListRequestConfig;
     formConfig?: any;

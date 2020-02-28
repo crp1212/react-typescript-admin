@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styles from './NormalList.less'
 import { Table as AntdTable } from 'antd'
 import LoadingCover from '@/components/LoadingCover'
+import CopyWarp from '@/components/CopyWarp'
 import { watchWindowResize } from '@/utils/index'
 
 interface TableConfig {
@@ -40,21 +41,30 @@ class Table extends Component<TableProps, {}> implements TableRef {
       result = {
         title: '#',
         dataIndex: '',
-        ...baseConfig,
         render (value: any, record: any, index: number) {
           return index + 1
         }
       }
     } else if (type === 'operator') {
       result = {
-        title: obj.label,
-        ...baseConfig,
         render (value: any, record: any, index: number) {
           return <div className='text-btn-group'>
             { obj.operatorConfig.map((item: StringObject, index: number) =>  (<div key={index} onClick={clickHandle.bind(_this, item, record)}>{item.text}</div>))}
           </div>
         }
       }
+    } else if (type === 'copy') {
+      result = {
+        render (value: any, record: any, index: number) {
+          return <CopyWarp>{ record[obj.key] }</CopyWarp> 
+        }
+      }
+    } else {
+      return this.getNormalColumnsItem(obj)
+    }
+    result = {
+      ...baseConfig,
+      ...result
     }
     return result
   }
@@ -64,8 +74,8 @@ class Table extends Component<TableProps, {}> implements TableRef {
     </div>
   }
   public getColumnsBaseConfig (obj: CommonObject) {
-    let { width } = obj
-    return { width }
+    let { width, label } = obj
+    return { width, title: label }
   }
   public getNormalColumnsItem (obj: CommonObject) {
     let renderListTableItem = this.renderListTableItem

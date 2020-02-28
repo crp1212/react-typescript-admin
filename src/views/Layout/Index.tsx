@@ -19,7 +19,7 @@ class Index extends Component{
   }
   public async initRouterAuth () { // 根据权限初始化路由
     try {
-      setAuthRoutes({
+      /* setAuthRoutes({
         '/index': true,
         '/test': true,
         '/test/v': true,
@@ -27,7 +27,7 @@ class Index extends Component{
         '/system/manager-list': true,
         '/eyedrop': true,
         '/eyedrop/time-list': true,
-      })
+      }) */
       this.setState({ pageLoading: false })
     } catch (error) {
       

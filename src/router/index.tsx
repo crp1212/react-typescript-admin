@@ -8,6 +8,7 @@ import Template from '@/views/template/index'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import SystemRoute from './system'
 import EyedropRoute from './eyedrop'
+import GimojiRoute from './gitmoji'
 
 let commonRoutes: RoutePramas[] = [ // 通用路由, 所有用户都能有
   {
@@ -31,44 +32,7 @@ let commonRoutes: RoutePramas[] = [ // 通用路由, 所有用户都能有
   }
 ]
 let authRoutes = [
-  // {
-  //   path: '/test',
-  //   exact: false,
-  //   component: Template,
-  //   meta: {
-  //     title: '测试'
-  //   },
-  //   children: [
-  //     {
-  //       path: '/a',
-  //       exact: true,
-  //       hide: true,
-  //       customLayout: true,
-  //       meta: {
-  //         title: 'a'
-  //       },
-  //       component: () => <div>a</div>
-  //     },
-  //     {
-  //       path: '/v',
-  //       exact: true,
-  //       meta: {
-  //         title: 'v'
-  //       },
-  //       component: () => <div>v</div>
-  //     },
-  //     {
-  //       path: '/b',
-  //       exact: true,
-  //       hide: true,
-  //       meta: {
-  //         title: 'c'
-  //       },
-  //       component: () => <div>b</div>
-  //     }
-  //   ]
-  // },
-  // SystemRoute,
+  GimojiRoute,
   EyedropRoute
 ]
 let routesConfig: RoutePramas[] = [
@@ -173,7 +137,6 @@ export const getRouterParent = (pathname: string) => {
 }
 export const sideBarsRoutes = commonLayoutRoute.filter((item) => !item.hide) 
 export const setRouteUnAuth = function (route: RoutePramas, authKeyMap: BooleanObject) { // 设置路由是否有权限
-  console.log(route)
   route.unAuth = !authKeyMap[route.path]
 }
 export const setAuthRoutes = function (authKeyMap: BooleanObject) { // 传入权限路由后, 改变sideBarsRoutes

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node build/dev.server.js",
     "build": "node build/build.js",
-    "docker:update": "docker cp ./dist eyedrop:/dist"
+    "docker:update": "docker cp ./dist eyedrop:/"
   },
   "dependencies": {
     "antd": "^3.20.3",

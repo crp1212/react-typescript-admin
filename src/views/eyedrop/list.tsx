@@ -26,7 +26,8 @@ class List extends Component<ListProps, {}> {
   public addEyedrop () {
     let dataSource = this.state.dataSource.concat({
       eyedropName: this.state.eyedropName,
-      time: moment().format('YYYY-MM-DD HH:mm:ss')
+      time: moment().format('YYYY-MM-DD HH:mm:ss'),
+      key: Date.now()
     })
     this.setState({dataSource})
     setCacheData(dataSource)

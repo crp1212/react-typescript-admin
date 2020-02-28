@@ -24,6 +24,9 @@ export const isUnEmptyObject = (obj: any) => {
 export const errorNotify = (str: string) => { // 消息错误提醒
   message.error(str)
 }
+export const successNotify = (str: string) => { // 消息成功提醒
+  message.success(str)
+}
 export function hexColorToRGB (hexColor = '') { // 
   if (hexColor.length !== 6) { 
     console.error('非正确的十六进制颜色') 
@@ -88,4 +91,13 @@ export function debouce (fn: Function, time: number, context?: any) {
     }, time)
   }
   return wrapFn
+}
+export function watchWindowResize (fn: Function) {
+  let resize = () => {
+    fn()
+  }
+  window.addEventListener('resize', resize)
+  return () => {
+    window.removeEventListener('resize', resize)
+  }
 }
