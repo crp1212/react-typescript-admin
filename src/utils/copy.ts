@@ -5,7 +5,11 @@ export function initCopyElement (el: HTMLDivElement | null = null, success?: Fun
     console.error('初始化点击复制功能失败, 没有可执行的元素')
     return
   }
-  var clipboard = new ClipboardJS(el)
+  var clipboard = new ClipboardJS(el, {
+    text: () => {
+      return el.innerText
+    }
+  })
 
   clipboard.on('success', function (e: any) {
     success && success()
