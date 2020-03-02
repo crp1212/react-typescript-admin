@@ -1,8 +1,15 @@
 import { fetch } from '@/apis/index'
 import { isFunction } from './index'
 
+interface ActionHandleParamParameter {
+  actionType: string;
+  key: string;
+  row?: CommonObject; // 具体查询参数, 用于列表的中就是每一条返回的数据的所有字段
+  text?: string;
+  [propName: string]: any;
+}
 interface ActionHandleParam extends CommonObject{
-  parameter: CommonObject;
+  parameter: ActionHandleParamParameter;
   handlers?: FunctionObject;
   context?: any;
   queryOption?: StringObject;
@@ -37,7 +44,16 @@ function changeHandle (params: QueryHandleParam) {
   let { parameter, queryOption } = params
   queryOptionHandle(queryOption, parameter)
 } 
-
+function openWindowHandle (params: QueryHandleParam) {
+  console.log(params)
+  let parameter = params.parameter
+  if (!parameter.row) { 
+    console.error('此处parameter.row不能为空')
+    return 
+  }
+  let url = parameter.row[parameter.key]
+  window.open(url)
+}
 async function requestHandle (params: QueryHandleParam) {
   let { requestTarget, requestParam, before, success, errorHandle } = params.parameter
   let requestFn: Function
@@ -71,7 +87,8 @@ let actionTypeDispath: FunctionObject = {
   change: changeHandle,
   add: commonHandle,
   filter: commonHandle,
-  request: requestHandle
+  request: requestHandle,
+  openWindow: openWindowHandle
 }
 
 export default function actionHandle (params: ActionHandleParam ) {

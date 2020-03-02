@@ -3,7 +3,8 @@ import styles from './NormalList.less'
 import { Table as AntdTable } from 'antd'
 import LoadingCover from '@/components/LoadingCover'
 import CopyWarp from '@/components/CopyWarp'
-import { watchWindowResize } from '@/utils/index'
+import { watchWindowResize, isArray } from '@/utils/index'
+import Judge from '@/utils/judge'
 
 interface TableConfig {
   tableHeader: CommonObject[];
@@ -31,12 +32,29 @@ class Table extends Component<TableProps, {}> implements TableRef {
       row
     })
   }
+  public judgeShowRule (rules: CommonObject[] | undefined, source: CommonObject) { // 检测是否符合showrule的规则
+    if (!rules || rules.length === 0) { return true } // 直接判断为可显示
+    return rules.every(cur => {
+      let judgeType = cur.judgeType // 获取判断方式
+      let sourceValue = source[cur.key] // 获取key对应的值
+      let fn = Judge[judgeType]
+      let value = cur.value
+      if (!value) { // 没有设置value表示没有需要比较
+        return fn(sourceValue)
+      } else if (isArray(value)) { // 数组的时候
+        return value.every((item: any) => fn(item, sourceValue))
+      } else { // 单个值的时候
+        return fn(cur, sourceValue)
+      }
+    })
+  }
   public getColumnsTypeItem (obj: CommonObject) {
     let type = obj.type
     let result
     let clickHandle = this.onClick
     let _this = this
     let baseConfig = this.getColumnsBaseConfig(obj)
+    let judgeShowRule = this.judgeShowRule
     if (type === 'index') {
       result = {
         title: '#',
@@ -49,7 +67,7 @@ class Table extends Component<TableProps, {}> implements TableRef {
       result = {
         render (value: any, record: any, index: number) {
           return <div className='text-btn-group'>
-            { obj.operatorConfig.map((item: StringObject, index: number) =>  (<div key={index} onClick={clickHandle.bind(_this, item, record)}>{item.text}</div>))}
+            { obj.operatorConfig.filter((item: CommonObject) => judgeShowRule(item.showRule, record)).map((item: CommonObject, index: number) =>  (<div key={index} onClick={clickHandle.bind(_this, item, record)}>{item.text}</div>))}
           </div>
         }
       }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { CommonProps } from './form.d'
 import styles from './Form.less'
-import Judge from '@/utils/Judge'
+import Judge from '@/utils/judge'
 
 
 
