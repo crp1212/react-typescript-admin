@@ -401,13 +401,19 @@
       "0 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/eyedrop.ts @/views/eyedrop/list.tsx": 0,
       "1 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/eyedrop.ts @/views/eyedrop/list.tsx": 2,
       "0 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/gitmoji.ts @/views/Gitmoji/List.tsx": 0,
-      "1 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/gitmoji.ts @/views/Gitmoji/List.tsx": 3
+      "1 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/gitmoji.ts @/views/Gitmoji/List.tsx": 3,
+      "0 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/update-manage.ts @/views/WorkUpdate/List.tsx": 0,
+      "1 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/update-manage.ts @/views/WorkUpdate/List.tsx": 3,
+      "2 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/gitmoji.ts @/views/Gitmoji/List.tsx": 4,
+      "2 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/update-manage.ts @/views/WorkUpdate/List.tsx": 5
     },
     "usedIds": [
       0,
       1,
       2,
-      3
+      3,
+      4,
+      5
     ]
   },
   "mini-css-extract-plugin node_modules/css-loader/dist/cjs.js??ref--5-1!node_modules/less-loader/dist/cjs.js!src/components/container/NormalList/NormalList.less": [

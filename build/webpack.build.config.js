@@ -6,6 +6,7 @@ const merge = require('webpack-merge')
 const webpack = require('webpack')
 const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const FilterWarningsPlugin = require('webpack-filter-warnings-plugin')
 
 
 function absolutePath(str) {
@@ -40,5 +41,10 @@ module.exports = merge(baseConfig, {
             })
         ]
     },
-    recordsPath: path.join(__dirname, '../records.json')
+    recordsPath: path.join(__dirname, '../records.json'),
+    plugins: [
+        new FilterWarningsPlugin({
+            exclude: /mini-css-extract-plugin[^]*Conflicting order between:/,
+        }),
+    ]
 })
