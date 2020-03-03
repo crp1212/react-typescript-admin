@@ -14,7 +14,7 @@ let workUpdateList = [
   },
   { 
     key: '2', 
-    title: 'crm测试站', 
+    title: '售后系统测试站', 
     updateUrl: 'http://support.xair.cn/gitpull'
   },
   { 
