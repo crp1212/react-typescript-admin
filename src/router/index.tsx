@@ -5,7 +5,6 @@ import LoadingPage from '@/views/Login/Login'
 import Common404 from '@/views/common/404'
 import Common403 from '@/views/common/403'
 import { Route, Switch, Redirect } from 'react-router-dom'
-import EyedropRoute from './eyedrop'
 import GimojiRoute from './gitmoji'
 import WorkUpdateRoute from './update-manage'
 
@@ -32,7 +31,6 @@ let commonRoutes: RoutePramas[] = [ // 通用路由, 所有用户都能有
 ]
 let authRoutes = [
   GimojiRoute,
-  EyedropRoute,
   WorkUpdateRoute
 ]
 let routesConfig: RoutePramas[] = [
