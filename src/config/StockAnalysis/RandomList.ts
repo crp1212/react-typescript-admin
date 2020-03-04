@@ -27,7 +27,7 @@ export default {
             requestTarget: requestStockOptionalListAdd,
             showRule: [{
               key: 'isOptional',
-              value: void 0,
+              value: false,
               judgeType: 'equal'
             }]
           },

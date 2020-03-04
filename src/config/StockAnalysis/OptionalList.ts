@@ -1,3 +1,4 @@
+import { requestStockOptionalListDel, requestStockForecaseListAdd } from '@/apis/stock'
 export default {
   table: {
     tableHeader: [
@@ -16,23 +17,30 @@ export default {
         type: 'operator',
         operatorConfig: [
           {
-            actionType: 'openWindow',
-            text: '删除',
-            key: 'updateUrl',
+            actionType: 'check',
+            text: '查看'
+          },
+          {
+            actionType: 'request',
+            text: '加入预测',
+            requestParamsMap: {
+              code: 'code',
+              stockName: 'stockName'
+            },
+            requestTarget: requestStockForecaseListAdd,
             showRule: [{
-              key: 'updateUrl',
-              judgeType: 'noUndefined'
+              key: 'forecast',
+              value: false,
+              judgeType: 'equal'
             }]
           },
           {
-            actionType: 'openWindow',
-            text: '加入预测',
-            key: 'cacheUrl',
-            showRule: [{
-              key: 'cacheUrl',
-              judgeType: 'noUndefined'
-            }]
+            actionType: 'request',
+            text: '删除',
+            requestTarget: requestStockOptionalListDel,
+            requestParamsMap: { code: 'code' }
           }
+          
         ]
       }
     ]
