@@ -60,7 +60,6 @@ class NormalList extends Component<NormalListProps, {}> {
         ...defaultQuery,
         ...this.queryOption
       }))
-      console.log(data)
       tableData = data.data.map((obj: any, index: number) => ({
         ...obj,
         key: index
