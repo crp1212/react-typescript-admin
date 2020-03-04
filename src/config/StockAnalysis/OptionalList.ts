@@ -1,4 +1,4 @@
-import { requestStockOptionalListDel, requestStockForecaseListAdd } from '@/apis/stock'
+import { requestStockOptionalListDel, requestStockForecastListAdd } from '@/apis/stock'
 export default {
   table: {
     tableHeader: [
@@ -27,7 +27,7 @@ export default {
               code: 'code',
               stockName: 'stockName'
             },
-            requestTarget: requestStockForecaseListAdd,
+            requestTarget: requestStockForecastListAdd,
             showRule: [{
               key: 'forecast',
               value: false,

@@ -29,13 +29,13 @@ let StockRoute = {
       component:  () => CommonSuspenseContianer(lazy(() => import('@/views/Stock/RandomList.tsx')))
     },
     {
-      path: '/forecase/list',
+      path: '/forecast/list',
       exact: true,
       customLayout: false,
       meta: {
-        title: 'forecase'
+        title: 'forecast'
       },
-      component:  () => CommonSuspenseContianer(lazy(() => import('@/views/Stock/ForecaseList.tsx')))
+      component:  () => CommonSuspenseContianer(lazy(() => import('@/views/Stock/ForecastList')))
     }
   ]
 }

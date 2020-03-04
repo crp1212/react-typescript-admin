@@ -1,4 +1,4 @@
-import { requestStockForecaseListDel } from '@/apis/stock'
+import { requestStockForecastListDel } from '@/apis/stock'
 
 export default {
   table: {
@@ -24,7 +24,7 @@ export default {
           {
             actionType: 'request',
             text: '删除',
-            requestTarget: requestStockForecaseListDel,
+            requestTarget: requestStockForecastListDel,
             requestParamsMap: { code: 'code' }
           }
         ]
