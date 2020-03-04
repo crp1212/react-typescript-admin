@@ -7,8 +7,8 @@ var dev = {
     port: 3030,
     proxy: [
         {
-            context: ['/backstage', '/qiuniu_token', '/login', '/logout'],
-            target: 'http://support.xair.cn/',
+            context: ['/stock'],
+            target: 'http://localhost:1599',
             secure: false,
             changeOrigin: true
         }

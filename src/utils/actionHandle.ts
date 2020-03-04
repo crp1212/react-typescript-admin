@@ -1,7 +1,7 @@
 import { fetch } from '@/apis/index'
 import { isFunction } from './index'
 
-interface ActionHandleParamParameter {
+export interface ActionHandleParamParameter {
   actionType: string;
   key: string;
   row?: CommonObject; // 具体查询参数, 用于列表的中就是每一条返回的数据的所有字段

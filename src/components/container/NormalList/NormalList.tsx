@@ -7,6 +7,7 @@ import styles from './NormalList.less'
 import { isString, clearEmptyProperty } from '@/utils/index'
 import { fetch } from '@/apis/index'
 import actionHandle from '@/utils/actionHandle'
+import { ActionHandleParamParameter } from '@/utils/actionHandle'
 
 
 interface NormalListProps { 
@@ -40,15 +41,12 @@ class NormalList extends Component<NormalListProps, {}> {
   public initRequestMode () { // 初始化表格数据请求模式
     this.setState({ tableLoading: true })
     let requestTarget = this.props.requestTarget || this.props.config.requestTarget
-    if (!requestTarget) { return }
     let request
     if (!requestTarget) {
       console.warn('没有请求数据的配置')
       return
     }
-    if (isString(requestTarget)) {
-      request = fetch('get', (requestTarget as string))
-    }
+    request = isString(requestTarget) ? fetch('get', (requestTarget as string)) : requestTarget
     this.requestFn = request
     this.updateData()
   }
@@ -62,13 +60,14 @@ class NormalList extends Component<NormalListProps, {}> {
         ...defaultQuery,
         ...this.queryOption
       }))
+      console.log(data)
       tableData = data.data.map((obj: any, index: number) => ({
         ...obj,
         key: index
       }))
       total = data.total
     } catch (error) {
-      
+      console.log(error)
     }
     this.setState({
       tableData,
@@ -76,7 +75,7 @@ class NormalList extends Component<NormalListProps, {}> {
       total
     })
   }
-  public onActionHandle (parameter: CommonObject) {
+  public onActionHandle (parameter: ActionHandleParamParameter) {
     actionHandle({
       parameter,
       queryOption: this.queryOption,
@@ -102,7 +101,6 @@ class NormalList extends Component<NormalListProps, {}> {
     let headerConfig = this.props.config.header  
     let tableConfig = this.props.config.table
     let formModalConfig = this.props.config.formConfig
-    console.log(formModalConfig)
     let paginationConfig = this.props.config.pagination
     return <div className={'rc-col ' + styles.container}>
       {
