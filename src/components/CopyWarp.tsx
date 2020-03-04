@@ -11,7 +11,6 @@ class CopyWarp extends Component<CopyWarpProps, {}> {
   }
   public copyRef: HTMLDivElement | null = null
   public componentDidMount () {
-    console.log(this.copyRef)
     initCopyElement(this.copyRef, () => {
       successNotify('复制成功')
     }, () => {
