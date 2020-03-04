@@ -18,6 +18,15 @@ let StockRoute = {
         title: 'optional'
       },
       component:  () => CommonSuspenseContianer(lazy(() => import('@/views/Stock/OptionalList.tsx')))
+    }, 
+    {
+      path: '/random/list',
+      exact: true,
+      customLayout: false,
+      meta: {
+        title: 'random'
+      },
+      component:  () => CommonSuspenseContianer(lazy(() => import('@/views/Stock/RandomList.tsx')))
     }
   ]
 }

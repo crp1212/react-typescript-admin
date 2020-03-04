@@ -10,7 +10,6 @@ export default {
         key: 'code',
         label: '股票代码',
         width: 150,
-        type: 'copy'
       },
       {
         label: '操作',

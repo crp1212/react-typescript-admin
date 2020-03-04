@@ -10,11 +10,15 @@ export function nonEmpty (val: any) { // 判断是否非空
     return !!val
   }
 }
+export function equal (a: any, b: any) {
+  return a === b
+}
 export function noUndefined (value: any) {
   return value !== void 0
 }
 let Judge: FunctionObject = {
   nonEmpty,
-  noUndefined
+  noUndefined,
+  equal
 }
 export default Judge
