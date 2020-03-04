@@ -26,10 +26,18 @@ class Table extends Component<TableProps, {}> implements TableRef {
     tableContainerHeight: ''
   }
   public tableRef: HTMLDivElement | null = null
-  public onClick (config: StringObject, row: any) { // row 是的列表单条数据
+  public onClick (config: CommonObject, row: CommonObject) { // row 是的列表单条数据
+    let requestParamsMap: StringObject = config.requestParamsMap
+    let requestParam: StringObject = {}
+    if (requestParamsMap) {
+      Object.keys(requestParamsMap).forEach((key: string) => {
+        requestParam[key] = row[requestParamsMap[key]]
+      })
+    }
     this.props.onAction({
       ...config,
-      row
+      row,
+      requestParam
     })
   }
   public judgeShowRule (rules: CommonObject[] | undefined, source: CommonObject) { // 检测是否符合showrule的规则
