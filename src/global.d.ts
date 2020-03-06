@@ -28,6 +28,9 @@ declare global {
   interface StringObject {
     [propName: string]: string;
   }
+  interface NumberObject {
+    [propName: string]: number;
+  }
   interface FunctionObject {
     [propName: string]: Function;
   }
