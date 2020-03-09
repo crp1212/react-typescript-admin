@@ -37,11 +37,19 @@ body,html{
   .rc-row{
     display: flex;
     flex-direction: row;
+    > div[data-row-grow]{
+      flex-grow: 1;
+      width: 0;
+      flex-wrap: wrap;
+    }
   }
   .grow-scroll{
     flex-grow: 1;
     height: 0;
     overflow-y: auto;
+  }
+  .fl-sh{
+    flex-shrink: 0;
   }
   ::-webkit-scrollbar {
     width: 8px;

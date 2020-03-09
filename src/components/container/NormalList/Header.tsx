@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styles from './NormalList.less'
 import { getFormComponent } from '@/components/form/Index'
-interface HeaderConfig {
+export interface HeaderConfig {
   list: NormalListUnitConfig[];
   rightList: NormalListUnitConfig[];
   query?: boolean; // 当为false的时候, header中值改变时不做query的hack操作

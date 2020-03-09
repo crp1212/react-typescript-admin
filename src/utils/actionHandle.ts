@@ -91,7 +91,7 @@ let actionTypeDispath: FunctionObject = {
   openWindow: openWindowHandle
 }
 
-export default function actionHandle (params: ActionHandleParam ) {
+export default async function actionHandle (params: ActionHandleParam ) {
   let { parameter, queryOption } = params
   let actionType = parameter.actionType
   if (!actionType) {
@@ -105,7 +105,7 @@ export default function actionHandle (params: ActionHandleParam ) {
   }
   let handlerFn = actionTypeDispath[actionType]
   if (handlerFn) {
-    handlerFn(commonParams)
+    await handlerFn(commonParams)
   } else {
     console.log(params)
     console.warn(`未能处理的actionType=${actionType}`)

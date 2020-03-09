@@ -101,3 +101,9 @@ export function watchWindowResize (fn: Function) {
     window.removeEventListener('resize', resize)
   }
 }
+export const pickAppointKeyToNewObject = (target: CommonObject, arr: string[]) => { // 从object中提取一些key构成新的object, 浅复制
+  return arr.reduce((result: CommonObject, key) => {
+    result[key] = target[key]
+    return result
+  }, {})
+}
