@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import LoadingWrap from '@/components/LoadingCover/wrap'
-import ChartWarp from '@/components/Stock/ChartWarp'
+import ChartWrap from '@/components/Stock/ChartWrap'
 import { Menu } from 'antd'
 import { ClickParam } from 'antd/lib/menu'
 import styles from './Stock.less'
@@ -82,9 +82,9 @@ class StockListView extends Component<StockListViewProps, {}> {
         </Menu>
         
       </div>
-      <div className={styles['echarts-container'] + ' rc-col'} data-row-grow>
+      <div className={styles['echarts-container'] } data-row-grow>
         { hedaerConfig ? <Header config={hedaerConfig} onAction={this.headerAction.bind(this)}></Header> : ''}
-        <ChartWarp code={this.state.code}></ChartWarp>  
+        <ChartWrap code={this.state.code}></ChartWrap>  
       </div>
     </LoadingWrap>
   }

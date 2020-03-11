@@ -4,14 +4,14 @@ import LoadingCover from '@/components/LoadingCover/index'
 import { getStockDetail } from '@/apis/stock'
 import styles from './Stock.less'
 
-interface ChartWarpProps { 
+interface ChartWrapProps { 
   code: string;
 }
 interface StockDetail extends CommonObject{
   result: CommonObject[];
 
 }
-class ChartWarp extends Component<ChartWarpProps, {}> {
+class ChartWrap extends Component<ChartWrapProps, {}> {
   public state = {
     loading: false
   }
@@ -33,7 +33,7 @@ class ChartWarp extends Component<ChartWarpProps, {}> {
       this.getStockDetail()
     }
   }
-  public componentDidUpdate (prevProps: ChartWarpProps) {
+  public componentDidUpdate (prevProps: ChartWrapProps) {
     if (prevProps.code !== this.props.code) {
       // code更新就刷新信息
       this.getStockDetail()
@@ -125,15 +125,15 @@ class ChartWarp extends Component<ChartWarpProps, {}> {
         show: true, 
         confine: true, 
         trigger: 'axis',
-        formatter (params) {
+        formatter (params: CommonObject[]) {
           console.log(params)
           let data = params[0].data
           return `
-            日期: ${params[0].axisValue}
-            开盘价: ${data[1]},<br>
-            收盘价: ${data[2]},<br>
-            最低价: ${data[3]},<br>
-            最高价: ${data[4]},<br>
+            日期: ${params[0].axisValue}<br>
+            开盘价: ${data[1]}<br>
+            收盘价: ${data[2]}<br>
+            最低价: ${data[3]}<br>
+            最高价: ${data[4]}<br>
             涨跌幅: ${data[6]}
           `
         }
@@ -174,6 +174,6 @@ class ChartWarp extends Component<ChartWarpProps, {}> {
 }
 
 
-export default ChartWarp
+export default ChartWrap
 
 

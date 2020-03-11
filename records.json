@@ -9,7 +9,7 @@
         "byName": {},
         "bySource": {},
         "usedIds": [
-          1
+          0
         ]
       }
     }
@@ -405,15 +405,26 @@
       "0 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/update-manage.ts @/views/WorkUpdate/List.tsx": 0,
       "1 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/update-manage.ts @/views/WorkUpdate/List.tsx": 3,
       "2 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/gitmoji.ts @/views/Gitmoji/List.tsx": 4,
-      "2 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/update-manage.ts @/views/WorkUpdate/List.tsx": 5
+      "2 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/update-manage.ts @/views/WorkUpdate/List.tsx": 5,
+      "0 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/OptionalList.tsx": 0,
+      "0 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/RandomList.tsx": 0,
+      "0 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/ForecastList": 0,
+      "1 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/OptionalList.tsx": 3,
+      "1 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/RandomList.tsx": 3,
+      "1 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/ForecastList": 3,
+      "2 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/OptionalList.tsx": 6,
+      "2 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/RandomList.tsx": 7,
+      "2 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/ForecastList": 8
     },
     "usedIds": [
       0,
       1,
-      2,
       3,
       4,
-      5
+      5,
+      6,
+      7,
+      8
     ]
   },
   "mini-css-extract-plugin node_modules/css-loader/dist/cjs.js??ref--5-1!node_modules/less-loader/dist/cjs.js!src/components/container/NormalList/NormalList.less": [
@@ -468,6 +479,40 @@
     }
   ],
   "mini-css-extract-plugin node_modules/css-loader/dist/cjs.js??ref--5-1!node_modules/less-loader/dist/cjs.js!src/components/form/Form.less": [
+    {
+      "modules": {
+        "byIdentifier": {},
+        "usedIds": {}
+      },
+      "chunks": {
+        "byName": {
+          "mini-css-extract-plugin": 0
+        },
+        "bySource": {},
+        "usedIds": [
+          0
+        ]
+      }
+    }
+  ],
+  "mini-css-extract-plugin node_modules/css-loader/dist/cjs.js??ref--7-1!node_modules/antd/es/config-provider/style/index.css": [
+    {
+      "modules": {
+        "byIdentifier": {},
+        "usedIds": {}
+      },
+      "chunks": {
+        "byName": {
+          "mini-css-extract-plugin": 0
+        },
+        "bySource": {},
+        "usedIds": [
+          0
+        ]
+      }
+    }
+  ],
+  "mini-css-extract-plugin node_modules/css-loader/dist/cjs.js??ref--5-1!node_modules/less-loader/dist/cjs.js!src/components/Stock/Stock.less": [
     {
       "modules": {
         "byIdentifier": {},
