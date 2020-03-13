@@ -6,6 +6,7 @@ import styles from './Stock.less'
 
 interface ChartWrapProps { 
   code: string;
+  watchStockDetail?: Function;
 }
 interface StockDetail extends CommonObject{
   result: CommonObject[];
@@ -52,9 +53,12 @@ class ChartWrap extends Component<ChartWrapProps, {}> {
       let lineOption = this.getPriceLineChartOption(data)
       let volumnOption = this.getVolumnLineChartOption(data)
       let candlestickOption = this.getCamdlestickChartOption(data)
+      let emitStockDetail = this.props.watchStockDetail
       this.priceLineVm && this.priceLineVm.setOption(lineOption)
       this.volumnLineVm && this.volumnLineVm.setOption(volumnOption)
       this.candlestickLineVm && this.candlestickLineVm.setOption(candlestickOption)
+      emitStockDetail && emitStockDetail(data)
+
     } catch (error) {
       console.log(error)
     }
@@ -168,7 +172,7 @@ class ChartWrap extends Component<ChartWrapProps, {}> {
       <LoadingCover loading={this.state.loading}></LoadingCover>
       <EchartContainer width={600} height={400} init={this.priceLineInit.bind(this)} className='fl-sh'></EchartContainer> 
       <EchartContainer width={600} height={400} init={this.volumnLineInit.bind(this)} className='fl-sh'></EchartContainer> 
-      <EchartContainer width={1200} height={400} init={this.candlestickLineInit.bind(this)} className='fl-sh'></EchartContainer> 
+      <EchartContainer width={800} height={400} init={this.candlestickLineInit.bind(this)} className='fl-sh'></EchartContainer> 
     </div>
   }
 }

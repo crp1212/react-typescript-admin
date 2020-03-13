@@ -11,6 +11,15 @@ let StockRoute = {
   },
   children: [
     {
+      path: '/index',
+      exact: true,
+      customLayout: false,
+      meta: {
+        title: 'index'
+      },
+      component:  () => CommonSuspenseContianer(lazy(() => import('@/views/Stock/Index')))
+    },
+    {
       path: '/optional/list',
       exact: true,
       customLayout: false,
@@ -37,6 +46,7 @@ let StockRoute = {
       },
       component:  () => CommonSuspenseContianer(lazy(() => import('@/views/Stock/ForecastList')))
     }
+    
   ]
 }
 export default StockRoute
