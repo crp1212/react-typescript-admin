@@ -10,6 +10,7 @@ let gimojiList = [
   { key: ':bug:', code: ':bug:', icon: '🐛', description: '修复了Bug', descriptionEn: 'Fixing a bug.' }, 
   { key: ':lipstick:', code: ':lipstick:', icon: '💄', description: '更新UI和样式文件', descriptionEn: 'Updating the UI and style files.' }, 
   { key: ':fire:', code: ':fire:', icon: '🔥', description: '移除代码或文件', descriptionEn: 'Removing code or files.' }, 
+  { key: ':children_crossing:', code: ':children_crossing:', icon: '🚸', description: '改善用户体验/可用性', descriptionEn: 'Improving user experience / usability.' },
   { key: ':pencil2:', code: ':pencil2:', icon: '✏️', description: '改正错字', descriptionEn: 'Fixing typos.' }, 
   { key: ':heavy_plus_sign:', code: ':heavy_plus_sign:', icon: '➕', description: '添加依赖', descriptionEn: 'Adding a dependency.' }, 
   { key: ':art:', code: ':art:', icon: '🎨', description: '改进代码结构/格式', descriptionEn: 'Improving structure / format of the code.' },
