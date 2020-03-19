@@ -28,6 +28,13 @@ let commonRoutes: RoutePramas[] = [ // 通用路由, 所有用户都能有
     component: LoadingPage,
     hide: true,
     customLayout: true
+  },
+  {
+    path: '/black',
+    exact: true,
+    component: () => <div style={{backgroundColor: 'black', flexGrow: 1}}></div>,
+    hide: true,
+    customLayout: true
   }
 ]
 let authRoutes = [
