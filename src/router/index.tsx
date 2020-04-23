@@ -4,6 +4,7 @@ import IndexPage from '@/views/Index/Index'
 import LoadingPage from '@/views/Login/Login'
 import Common404 from '@/views/common/404'
 import Common403 from '@/views/common/403'
+import TestPage from '@/views/Test/Index'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import GimojiRoute from './gitmoji'
 import WorkUpdateRoute from './update-manage'
@@ -33,6 +34,13 @@ let commonRoutes: RoutePramas[] = [ // 通用路由, 所有用户都能有
     path: '/black',
     exact: true,
     component: () => <div style={{backgroundColor: 'black', flexGrow: 1}}></div>,
+    hide: true,
+    customLayout: true
+  },
+  {
+    path: '/test',
+    exact: true,
+    component: TestPage,
     hide: true,
     customLayout: true
   }
