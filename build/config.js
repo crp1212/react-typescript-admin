@@ -7,8 +7,8 @@ var dev = {
     port: 3030,
     proxy: [
         {
-            context: ['/stock'],
-            target: 'http://localhost:1599',
+            context: ['/stock', '/ocr'],
+            target: 'http://localhost:1593',
             secure: false,
             changeOrigin: true
         }

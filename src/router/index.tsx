@@ -7,6 +7,7 @@ import Common403 from '@/views/common/403'
 import TestPage from '@/views/Test/Index'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import GimojiRoute from './gitmoji'
+import OcrRoute from './ocr'
 import WorkUpdateRoute from './update-manage'
 import StockRoute from './stock'
 
@@ -48,6 +49,7 @@ let commonRoutes: RoutePramas[] = [ // 通用路由, 所有用户都能有
 let authRoutes = [
   GimojiRoute,
   WorkUpdateRoute,
+  OcrRoute,
   StockRoute
 ]
 let routesConfig: RoutePramas[] = [
