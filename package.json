@@ -6,12 +6,13 @@
   "scripts": {
     "dev": "node build/dev.server.js",
     "build": "node build/build.js",
-    "docker:update": "docker cp ./dist eyedrop:/"
+    "docker:update": "docker cp ./dist nodeserver:/web/src/"
   },
   "dependencies": {
     "antd": "^3.20.3",
     "axios": "^0.19.0",
     "clipboard": "^2.0.4",
+    "echarts": "^4.6.0",
     "moment": "^2.24.0",
     "qs": "^6.7.0",
     "react": "^16.8.6",
@@ -32,6 +33,7 @@
     "@hot-loader/react-dom": "^16.8.6",
     "@types/axios": "^0.14.0",
     "@types/clipboard": "^2.0.1",
+    "@types/echarts": "^4.4.3",
     "@types/mockjs": "^1.0.2",
     "@types/qs": "^6.5.3",
     "@types/react": "^16.8.23",

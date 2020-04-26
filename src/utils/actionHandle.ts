@@ -1,7 +1,7 @@
 import { fetch } from '@/apis/index'
 import { isFunction } from './index'
 
-interface ActionHandleParamParameter {
+export interface ActionHandleParamParameter {
   actionType: string;
   key: string;
   row?: CommonObject; // 具体查询参数, 用于列表的中就是每一条返回的数据的所有字段
@@ -91,7 +91,7 @@ let actionTypeDispath: FunctionObject = {
   openWindow: openWindowHandle
 }
 
-export default function actionHandle (params: ActionHandleParam ) {
+export default async function actionHandle (params: ActionHandleParam ) {
   let { parameter, queryOption } = params
   let actionType = parameter.actionType
   if (!actionType) {
@@ -105,7 +105,7 @@ export default function actionHandle (params: ActionHandleParam ) {
   }
   let handlerFn = actionTypeDispath[actionType]
   if (handlerFn) {
-    handlerFn(commonParams)
+    await handlerFn(commonParams)
   } else {
     console.log(params)
     console.warn(`未能处理的actionType=${actionType}`)

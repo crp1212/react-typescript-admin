@@ -3,7 +3,7 @@ import styles from './NormalList.less'
 import { Table as AntdTable } from 'antd'
 import LoadingCover from '@/components/LoadingCover'
 import CopyWarp from '@/components/CopyWarp'
-import { watchWindowResize, isArray } from '@/utils/index'
+import { watchWindowResize, isArray, successNotify } from '@/utils/index'
 import Judge from '@/utils/judge'
 
 interface TableConfig {
@@ -26,10 +26,24 @@ class Table extends Component<TableProps, {}> implements TableRef {
     tableContainerHeight: ''
   }
   public tableRef: HTMLDivElement | null = null
-  public onClick (config: StringObject, row: any) { // row 是的列表单条数据
+  public onClick (config: CommonObject, row: CommonObject) { // row 是的列表单条数据
+    let requestParamsMap: StringObject = config.requestParamsMap
+    let requestParam: StringObject = {}
+    if (requestParamsMap) {
+      Object.keys(requestParamsMap).forEach((key: string) => {
+        requestParam[key] = row[requestParamsMap[key]]
+      })
+    }
     this.props.onAction({
       ...config,
-      row
+      row,
+      requestParam,
+      success: () => {
+        successNotify('请求成功')
+        this.props.onAction({
+          actionType: 'query'
+        })
+      }
     })
   }
   public judgeShowRule (rules: CommonObject[] | undefined, source: CommonObject) { // 检测是否符合showrule的规则
@@ -39,12 +53,12 @@ class Table extends Component<TableProps, {}> implements TableRef {
       let sourceValue = source[cur.key] // 获取key对应的值
       let fn = Judge[judgeType]
       let value = cur.value
-      if (!value) { // 没有设置value表示没有需要比较
+      if (value === void 0) { // 没有设置value表示没有需要比较
         return fn(sourceValue)
       } else if (isArray(value)) { // 数组的时候
         return value.every((item: any) => fn(item, sourceValue))
       } else { // 单个值的时候
-        return fn(cur, sourceValue)
+        return fn(value, sourceValue)
       }
     })
   }

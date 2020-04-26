@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Pagination as AntdPagination } from 'antd'
+import styles from './NormalList.less'
 
 interface PaginationConfig {
   pageSizes: string[];
@@ -19,7 +20,9 @@ class Pagination extends Component<PaginationProps, {}> {
     pageSize: 10
   }
   public componentDidMount () {
-    console.log(this.props.config)
+    let pageSize = this.props.config.pageSize
+    this.setState({pageSize})
+    this.updateState(1, pageSize, 'change')
   }
   public onShowSizeChange (current: number, pageSize: number) {
     this.updateState(current, pageSize )
@@ -27,18 +30,18 @@ class Pagination extends Component<PaginationProps, {}> {
   public onChange (current: number, pageSize?: number) {
     this.updateState(current, pageSize )
   }
-  public updateState (current: number, pageSize?: number) {
+  public updateState (current: number, pageSize?: number, actionType?: string) {
     this.setState({current, pageSize})
     let onAction = this.props.onAction
     let config = this.props.config
     onAction({
-      actionType: 'query', 
+      actionType: actionType || 'query', 
       querys: [
         {
           key: config.pageKey,
           value: current
         },
-        {
+        { 
           key: config.pageSizeKey,
           value: pageSize
         }
@@ -50,6 +53,7 @@ class Pagination extends Component<PaginationProps, {}> {
     let { pageSizes } = this.props.config
     let total = this.props.total
     return <AntdPagination
+      className={styles.pagination}
       showSizeChanger
       showQuickJumper
       onShowSizeChange={this.onShowSizeChange.bind(this)}

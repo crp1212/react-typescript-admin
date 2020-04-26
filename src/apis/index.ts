@@ -11,7 +11,7 @@ let defaultOptions: RequestOption = {}
 let unAuthHandleList: Function[] = []
 
 function commonAxiosSuccessDataHandle (data: any) {
-  let result = data.data
+  let result = data
   if (isObject(result)) {
     Object.defineProperty(result, 'AxiosSourceData', {
       get () {
