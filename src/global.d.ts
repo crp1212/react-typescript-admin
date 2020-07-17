@@ -60,5 +60,20 @@ declare global {
     arraySeparators?: string; // 数组数据的连接符, 当需要把数组的value转化为字符串时使用
     [propName: string]: any;
   }
+  interface StockTransactionItem {
+    change: number, // 价格变化
+    price: number, // 成交价格
+    time: string, // 时间字符串
+    total: number, // 总成交额
+    type: string, // 成交类型 1 是买盘 2 是卖盘 3 是中性盘
+    volumn: number // 成交量
+  }
+  interface StockHistoryItem {
+    name: string, // 股票名称
+    limitVolumn: number, // 过滤值
+    code: string, // 股票号码
+    timeRange: number, // 时间范围
+    timeStr: string // 日期
+  }
 }
 export default global

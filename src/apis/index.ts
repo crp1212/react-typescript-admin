@@ -40,7 +40,6 @@ function formatParams (method: string, params: any, config?: any) { // 获取正
     }
   } else {
     result = qs.stringify(params)
-    console.log('result', result)
   }
   return result
 }

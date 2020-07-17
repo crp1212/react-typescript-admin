@@ -45,6 +45,15 @@ let StockRoute = {
         title: 'forecast'
       },
       component:  () => CommonSuspenseContianer(lazy(() => import('@/views/Stock/ForecastList')))
+    },
+    {
+      path: '/transaction/analysis',
+      exact: true,
+      customLayout: false,
+      meta: {
+        title: 'transaction-analysis'
+      },
+      component:  () => CommonSuspenseContianer(lazy(() => import('@/views/Stock/TransactionAnalysis')))
     }
     
   ]
