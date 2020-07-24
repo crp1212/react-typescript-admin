@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { Table } from 'antd'
 import styles from './Stock.less'
 interface TransactionTableProps { 
-  tableData: StockTransactionItem[]
+  tableData: StockTransactionItem[],
+  loading: boolean
 }
 
 let typeColor: StringObject = {
@@ -32,11 +33,12 @@ class TransactionTable extends Component<TransactionTableProps, {}> {
   public state = {
   }
   public shouldComponentUpdate (prevProps: TransactionTableProps) {
-    return prevProps.tableData !== this.props.tableData
+    return prevProps.tableData !== this.props.tableData || prevProps.loading !== this.props.loading
   }
   public render () {    
     let tableData = this.props.tableData
-    return <Table className={styles['transaction-table']} dataSource={tableData} columns={columns} pagination={false} size='small' scroll={{y: 500}}></Table>
+    let loading = this.props.loading
+    return <Table loading={loading} className={styles['transaction-table']} dataSource={tableData} columns={columns} pagination={false} size='small' scroll={{y: 500}}></Table>
   }
 }
 

@@ -9,7 +9,7 @@
         "byName": {},
         "bySource": {},
         "usedIds": [
-          0
+          1
         ]
       }
     }
@@ -414,17 +414,25 @@
       "1 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/ForecastList": 3,
       "2 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/OptionalList.tsx": 6,
       "2 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/RandomList.tsx": 7,
-      "2 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/ForecastList": 8
+      "2 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/ForecastList": 8,
+      "0 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/Index": 0,
+      "1 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/Index": 2,
+      "0 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/ocr.ts @/views/Ocr/Index.tsx": 9,
+      "0 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/TransactionAnalysis": 0,
+      "1 node_modules/babel-loader/lib/index.js??ref--4-0!src/router/stock.ts @/views/Stock/TransactionAnalysis": 10
     },
     "usedIds": [
       0,
       1,
+      10,
+      2,
       3,
       4,
       5,
       6,
       7,
-      8
+      8,
+      9
     ]
   },
   "mini-css-extract-plugin node_modules/css-loader/dist/cjs.js??ref--5-1!node_modules/less-loader/dist/cjs.js!src/components/container/NormalList/NormalList.less": [
@@ -513,6 +521,91 @@
     }
   ],
   "mini-css-extract-plugin node_modules/css-loader/dist/cjs.js??ref--5-1!node_modules/less-loader/dist/cjs.js!src/components/Stock/Stock.less": [
+    {
+      "modules": {
+        "byIdentifier": {},
+        "usedIds": {}
+      },
+      "chunks": {
+        "byName": {
+          "mini-css-extract-plugin": 0
+        },
+        "bySource": {},
+        "usedIds": [
+          0
+        ]
+      }
+    }
+  ],
+  "mini-css-extract-plugin node_modules/css-loader/dist/cjs.js??ref--5-1!node_modules/less-loader/dist/cjs.js!src/views/Ocr/Ocr.less": [
+    {
+      "modules": {
+        "byIdentifier": {},
+        "usedIds": {}
+      },
+      "chunks": {
+        "byName": {
+          "mini-css-extract-plugin": 0
+        },
+        "bySource": {},
+        "usedIds": [
+          0
+        ]
+      }
+    }
+  ],
+  "mini-css-extract-plugin node_modules/css-loader/dist/cjs.js??ref--5-1!node_modules/less-loader/dist/cjs.js!src/views/Stock/Stock.less": [
+    {
+      "modules": {
+        "byIdentifier": {},
+        "usedIds": {}
+      },
+      "chunks": {
+        "byName": {
+          "mini-css-extract-plugin": 0
+        },
+        "bySource": {},
+        "usedIds": [
+          0
+        ]
+      }
+    }
+  ],
+  "mini-css-extract-plugin node_modules/css-loader/dist/cjs.js??ref--7-1!node_modules/antd/es/date-picker/style/index.css": [
+    {
+      "modules": {
+        "byIdentifier": {},
+        "usedIds": {}
+      },
+      "chunks": {
+        "byName": {
+          "mini-css-extract-plugin": 0
+        },
+        "bySource": {},
+        "usedIds": [
+          0
+        ]
+      }
+    }
+  ],
+  "mini-css-extract-plugin node_modules/css-loader/dist/cjs.js??ref--7-1!node_modules/antd/es/time-picker/style/index.css": [
+    {
+      "modules": {
+        "byIdentifier": {},
+        "usedIds": {}
+      },
+      "chunks": {
+        "byName": {
+          "mini-css-extract-plugin": 0
+        },
+        "bySource": {},
+        "usedIds": [
+          0
+        ]
+      }
+    }
+  ],
+  "mini-css-extract-plugin node_modules/css-loader/dist/cjs.js??ref--7-1!node_modules/antd/es/tag/style/index.css": [
     {
       "modules": {
         "byIdentifier": {},
