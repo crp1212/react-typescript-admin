@@ -27,7 +27,11 @@ let columns = [
     key: 'volumn', 
     sorter: (a:StockTransactionItem, b:StockTransactionItem) => a.volumn - b.volumn,
     sortDirections: ['descend', 'ascend'],
-    render: (value: number, record: StockTransactionItem) => <div style={{color: typeColor[record.type]}}>{record.volumn}</div>}
+    render: (value: number, record: StockTransactionItem) => <div style={{color: typeColor[record.type]}}>{record.volumn}</div>
+  },
+  { title: '涨幅', dataIndex: 'gain', key: 'gain', width: 80 },
+  { title: '较上次变化', dataIndex: 'comparePrev', key: 'comparePrev', width: 120 },
+  { title: '较上次涨幅', dataIndex: 'comparePrevGain', key: 'comparePrevGain', width: 120 },
 ]
 class TransactionTable extends Component<TransactionTableProps, {}> {
   public state = {

@@ -22,13 +22,14 @@ interface TranscationRequestData {
 
 class TransactionAnalysis extends Component<TransactionAnalysisProps, {}> {
   public state = {
-    code: '002114', timeRange: '1', transactionData: [], sellTotal: 0, buyTotal: 0, limitVolumn: 500, time: moment(), timeList: [], timeOptionList: [], selectAll: true, loading: false
+    code: '002114', timeRange: '1', transactionData: [], sellTotal: 0, sellTotalMoney: 0, buyTotalMoney: 0, buyTotal: 0, limitVolumn: 500, time: moment(), timeList: [], timeOptionList: [], selectAll: true, loading: false
   }
   public stockName: string = ''
   public historyRef: React.RefObject<CommonObject> | null = null
   public timeStr: string = moment().format('YYYY-MM-DD')
   public sourceData: StockTransactionItem[] = []
   public requestData: TranscationRequestData = {}
+  public priceInfoMap: CommonObject = {}
   public codeChange (e: React.ChangeEvent<HTMLInputElement>) {
     // this.setState({})
     let code = e.target.value
@@ -46,13 +47,14 @@ class TransactionAnalysis extends Component<TransactionAnalysisProps, {}> {
   public stockItemAddDate (arr: StockTransactionItem[], date: string) {
     arr.forEach(item => {
       if (item.time.indexOf(date) !== -1) { return }
+      item.clockTime = item.time
       item.time = date + ' ' + item.time
+      
     })
     return arr
   }
   public componentWillMount () {
     let historyItem = getStockTransactionHistoryStorage()[0]
-    console.log(historyItem)
     this.historyUpdate(historyItem)
   }
   public updateSourceData (timeList?: (string | number | boolean) []) {
@@ -64,8 +66,11 @@ class TransactionAnalysis extends Component<TransactionAnalysisProps, {}> {
     this.sourceData = this.requestData.list.filter((item: TranscationRequestDataListItem) => {
       let date = item.date
       return timeList.indexOf(date) !== -1
-    }).map((item: CommonObject) => this.stockItemAddDate(item.data, item.date)).reduce((result: StockTransactionItem[], arr: StockTransactionItem[]) => {
-      result = result.concat(arr.slice(1, arr.length - 1))
+    }).map((item: CommonObject) => this.stockItemAddDate(item.data, item.date)).reduce((result: StockTransactionItem[], arr: StockTransactionItem[], transactionListIndex: number) => {
+      let open: number = this.priceInfoMap[arr[0].time.split(' ')[0]].open
+      result = result.concat(arr.filter(item => Number(item.clockTime.replace(/\:/g, '')) < 150000).slice(1, arr.length - 1).map((item, index) => ({
+        ...item
+      })))
       return result
     }, [])
   }
@@ -89,6 +94,10 @@ class TransactionAnalysis extends Component<TransactionAnalysisProps, {}> {
       let data = await getStockTransaction({code, timeStr, timeRange})
       this.requestData = data
       this.state.timeList = data.list.map((item: CommonObject) => item.date)
+      this.priceInfoMap = data.list.reduce((result: CommonObject, item: CommonObject) => {
+        result[item.date] = item.priceInfo
+        return result
+      }, {})
       this.state.timeOptionList = [...this.state.timeList]
       this.state.selectAll = true
       this.updateSourceData()
@@ -113,13 +122,40 @@ class TransactionAnalysis extends Component<TransactionAnalysisProps, {}> {
     let limitVolumn = e.target.value
     this.setState({limitVolumn})
   }
+  public getStatisticsInfo (data: StockTransactionItem[] ) {
+    let sellTotal = 0
+    let buyTotal = 0
+    let sellTotalMoney = 0
+    let buyTotalMoney = 0
+    for (let i = 0; i < data.length; i++) {
+      let item = data[i]
+      if (item.type === '2') {
+        sellTotal += item.volumn
+        sellTotalMoney += item.volumn * item.price
+      } else if (item.type === '1') {
+        buyTotal += item.volumn
+        buyTotalMoney += item.volumn * item.price
+      }
+    }
+    return {
+      sellTotal, buyTotal, sellTotalMoney: sellTotalMoney.toFixed(2), buyTotalMoney: buyTotalMoney.toFixed(2)
+    }
+  }
   public limitFilter () {
     let limitVolumn = this.state.limitVolumn
     let transactionData = this.sourceData.filter((item: StockTransactionItem) => item.volumn > limitVolumn)
+    let statisticsInfo = this.getStatisticsInfo(transactionData)
     this.setState({
-      transactionData,
-      sellTotal: transactionData.filter((item: StockTransactionItem) => item.type === '2').reduce((sum: number, item: StockTransactionItem) => sum + item.volumn, 0),
-      buyTotal: transactionData.filter((item: StockTransactionItem) => item.type === '1').reduce((sum: number, item: StockTransactionItem) => sum + item.volumn, 0)
+      transactionData: transactionData.map(item => {
+        let open: number = this.priceInfoMap[item.time.split(' ')[0]].prevClose // 获取上一个交易日收盘价
+        return {
+          ...item, 
+          gain: (((item.price - open) / open) * 100).toFixed(2) + '%',
+          comparePrev: item.change,
+          comparePrevGain: ((item.change / open) * 100).toFixed(2) + '%',
+        }
+      }),
+      ...statisticsInfo
     })
   }
   public getHistoryRef (ref: React.RefObject<CommonObject> | null) {
@@ -144,7 +180,6 @@ class TransactionAnalysis extends Component<TransactionAnalysisProps, {}> {
   }
   public selectAllChange (e) {
     let selectAll = e.target.checked 
-    console.log('selectAll', selectAll)
     let timeList = selectAll ? [...this.state.timeOptionList] : []
     this.setState({ 
       selectAll,
@@ -155,7 +190,6 @@ class TransactionAnalysis extends Component<TransactionAnalysisProps, {}> {
   }
   public render () {    
     let {code, timeRange, transactionData, limitVolumn, time, timeList, timeOptionList, selectAll, loading } = this.state
-    console.log('render', loading)
     const dateFormat = 'YYYY-MM-DD'
     return <div className="rc-row grow-scroll">
       <div className={Styles['transaction-query'] + ' rc-col'}>
@@ -186,8 +220,8 @@ class TransactionAnalysis extends Component<TransactionAnalysisProps, {}> {
       </div>
       <div className={Styles['transaction-content']}>
         <TransactionTable tableData={transactionData} loading={loading}></TransactionTable>
-        <div className="mt16">卖单总量: {this.state.sellTotal}</div>
-        <div>买单总量: {this.state.buyTotal}</div>
+        <div className="mt16">卖单总量: {this.state.sellTotal}, 总金额: {this.state.sellTotalMoney}</div>
+        <div>买单总量: {this.state.buyTotal}, 总金额: {this.state.buyTotalMoney}</div>
       </div>
     </div>
   }

@@ -3,6 +3,7 @@ import EchartContainer from '@/components/EchartContainer'
 import LoadingCover from '@/components/LoadingCover/index'
 import { getStockDetail } from '@/apis/stock'
 import styles from './Stock.less'
+import { stockAverage } from '@/utils/stockCalculate'
 
 interface ChartWrapProps { 
   code: string;
@@ -69,23 +70,60 @@ class ChartWrap extends Component<ChartWrapProps, {}> {
     return Number(average)
   }
   public getPriceLineChartOption (data: StockDetail) { // 获取价格折线图的option
-    let total = this.useDataToal
+    // let total = this.useDataToal
+    let total = data.result.length
+    let maxTotal = Math.max(total, 100)
+    let dataZoomStart = Math.floor(((maxTotal - 100) / maxTotal) * 100) + ''
+    console.log(dataZoomStart)
     let priceList = data.result
     let closePriceList = priceList.map(val => val.close) // 收盘价集合
     let key = 'close'
-    let mainData = priceList.slice(0, total).reverse().map((item: NumberObject) => item[key])
+    let mainData = priceList.slice(0).reverse().map((item: NumberObject) => item[key])
     let min = Math.min.apply(null, mainData) - 1
+    console.log(stockAverage(5, closePriceList))
     let options = { 
       title: { text: '价格曲线' },
       xAxis: {
         data: data.dates.slice(0, total).reverse()
       },
       yAxis: { type: 'value', min },
+      toolbox: {
+        feature: {
+            dataZoom: {
+                yAxisIndex: 'none'
+            },
+            restore: {},
+            saveAsImage: {}
+        }
+      },
+      dataZoom: [
+        {
+          type: 'slider',
+          show: true,
+          start: dataZoomStart,
+          end: '100',
+        },
+        {
+          id: 'dataZoomX',
+          type: 'inside',
+          show:true,
+          filterMode: 'filter'
+        },
+      ],
       series: [
         { data: mainData, type: 'line', name: '收盘价', symbolSize: 4 },
-        { data: Array(total).fill(this.getAverage(closePriceList, 50)), type: 'line', name: '五十日平均线', symbolSize: 4 },
+        {
+          name: 'MA5',
+          type: 'line',
+          data: stockAverage(5, closePriceList).reverse(),
+          smooth: true,
+          lineStyle: {
+            opacity: 0.5
+          }
+        },
+        /* { data: Array(total).fill(this.getAverage(closePriceList, 50)), type: 'line', name: '五十日平均线', symbolSize: 4 },
         { data: Array(total).fill(this.getAverage(closePriceList, 100)), type: 'line', name: '一百日平均线', symbolSize: 4 },
-        { data: Array(total).fill(this.getAverage(closePriceList, 200)), type: 'line', name: '二百日平均线', symbolSize: 4 }
+        { data: Array(total).fill(this.getAverage(closePriceList, 200)), type: 'line', name: '二百日平均线', symbolSize: 4 } */
       ],
       tooltip: { show: true, confine: true, trigger: 'axis' }
     }
@@ -116,6 +154,13 @@ class ChartWrap extends Component<ChartWrapProps, {}> {
     let total = this.useDataToal
     let upColor = '#00da3c'
     let downColor = '#ec0000'
+    let priceList = data.result
+    console.log(priceList)
+    let closePriceList = priceList.map(val => val.close) // 收盘价集合
+    let acerage5List = stockAverage(5, closePriceList).slice(0, total).reverse()
+    let acerage10List = stockAverage(10, closePriceList).slice(0, total).reverse()
+    let acerage20List = stockAverage(20, closePriceList).slice(0, total).reverse()
+    let acerage30List = stockAverage(30, closePriceList).slice(0, total).reverse()
     let candlestickList = data.result.slice(0, total).map((item, index) => {
       let dateOrigin = data.dates[index]
       let volumn = data.volumn[index]
@@ -130,7 +175,6 @@ class ChartWrap extends Component<ChartWrapProps, {}> {
         confine: true, 
         trigger: 'axis',
         formatter (params: CommonObject[]) {
-          console.log(params)
           let data = params[0].data
           return `
             日期: ${params[0].axisValue}<br>
@@ -162,7 +206,51 @@ class ChartWrap extends Component<ChartWrapProps, {}> {
             borderColor: null,
             borderColor0: null
           }
-        }
+        }, 
+        {
+          name: 'MA5',
+          type: 'line',
+          data: acerage5List,
+          smooth: true,
+          symbolSize: 4,
+          symbol: 'none', 
+          lineStyle: {
+            color: 'black'
+          }
+        },
+        {
+          name: 'MA10',
+          type: 'line',
+          data: acerage10List,
+          smooth: true,
+          symbolSize: 4,
+          symbol: 'none', 
+          lineStyle: {
+            color: 'pink'
+          }
+        },
+        {
+          name: 'MA20',
+          type: 'line',
+          data: acerage20List,
+          smooth: true,
+          symbolSize: 4,
+          symbol: 'none', 
+          lineStyle: {
+            color: 'green'
+          }
+        },
+        {
+          name: 'MA30',
+          type: 'line',
+          data: acerage30List,
+          smooth: true,
+          symbolSize: 4,
+          symbol: 'none', 
+          lineStyle: {
+            color: 'red'
+          }
+        },
       ]
     }
     return options
